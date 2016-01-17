@@ -1,0 +1,5 @@
+FenTT.css
+chess_merida_unicode.ttf
+*.html
+!chess_merida_unicode.html
+*.php
