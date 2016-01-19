@@ -3,9 +3,10 @@
 /*==============================================================================
  * Mediawiki PHP extension for chess FEN diagrams rendering
  *
- * Copyright (C) 2007-2016  Michael Peeters
+ * Copyright (C) 2007-2016  Michael Peeters <https://github.com/xeyownt>
  *
- * This file is part of the FenTT MediaWiki extension.
+ * This file is part of the FenTT MediaWiki extension
+ * <http://www.mediawiki.org/wiki/Extension:FenTT>.
  *
  * The FenTT MediaWiki extension is free software; you can redistribute it
  * and/or modify it under the terms of the GNU General Public License as

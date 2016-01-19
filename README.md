@@ -30,7 +30,8 @@ require_once "$IP/extensions/FenTT/FenTT.php";
 ## Links
 
 * [FenTT extension page on mediawiki.org](http://www.mediawiki.org/wiki/Extension:FenTT).
-* [Homepage](http://mip.noekeon.org/mwfentt/reference.html).
+* [Homepage](http://mip.noekeon.org/mwfentt).
+* [Source code on GitHub](https://github.com/xeyownt/mwfentt).
 
 ## Content
 
@@ -48,4 +49,7 @@ Readme.md                  This file
 
 Copyright (C) 2007-2016  Michael Peeters `<https://github.com/xeyownt>`.
 
-See file COPYING for license information.
+The FenTT MediaWiki extension comes with ABSOLUTELY NO WARRANTY. This is free software; you can redistribute it and/or modify it under the terms of the GNU
+General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+
+See file COPYING for more details.
