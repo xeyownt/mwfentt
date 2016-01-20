@@ -29,10 +29,10 @@ if (defined('MEDIAWIKI')) {
     $wgHooks['ParserFirstCallInit'][] = 'MWFenTT::onParserFirstCallInit';
 
     $wgResourceModules['ext.FenTT'] = array(
-	    'localBasePath' => __DIR__,
-	    'remoteExtPath' => 'FenTT',
-	    'styles'        => 'FenTT.css',
-	    'position'      => 'top',
+        'localBasePath' => __DIR__,
+        'remoteExtPath' => 'FenTT',
+        'styles'        => 'FenTT.css',
+        'position'      => 'top',
     );
 
     $wgExtensionCredits['parserhook'][] = array(
@@ -46,10 +46,10 @@ if (defined('MEDIAWIKI')) {
     class MWFenTT {
         private static $css_module_added = false;
 
-	    static function onParserFirstCallInit( Parser $parser ) {
-		    // Register parser handler for tag <fentt>
-		    $parser->setHook( 'fentt', 'MWFenTT::renderFentt' );
-	    }
+        static function onParserFirstCallInit( Parser $parser ) {
+            // Register parser handler for tag <fentt>
+            $parser->setHook( 'fentt', 'MWFenTT::renderFentt' );
+        }
 
         static function renderFentt( $input, array $args, Parser $parser, PPFrame $frame ) {
             if( ! self::$css_module_added ) {
@@ -186,29 +186,29 @@ class FenBoard {
         // print "DEBUG: __construct($this->fencode," . implode(" ",$this->border) . ",$this->mode,$this->cstyle,$this->cclass)\n";
     }
 
-	function border_isNSEO($nseo)
-	{
-		if(strlen($nseo) > 4) {
+    function border_isNSEO($nseo)
+    {
+        if(strlen($nseo) > 4) {
             return false;
         }
-		for($x=0; $x<strlen($nseo); $x++)
-		{
+        for($x=0; $x<strlen($nseo); $x++)
+        {
             if(!strchr("nseo",$nseo[$x])) {
                 return false;
             }
-		}
-		return true;
-	}
+        }
+        return true;
+    }
 
-	private function border_isCoordinate($coord)
-	{
-		if (strlen($coord) != 2) {
+    private function border_isCoordinate($coord)
+    {
+        if (strlen($coord) != 2) {
             return false;
         }
-		$coordOriginCol = ord($coord[0]) - 0x60;
-		$coordOriginRow = ord($coord[1]) - 0x30;
-		return ($coordOriginCol>=1) && ($coordOriginCol<=8) && ($coordOriginCol>=1) && ($coordOriginRow<=8);
-	}
+        $coordOriginCol = ord($coord[0]) - 0x60;
+        $coordOriginRow = ord($coord[1]) - 0x30;
+        return ($coordOriginCol>=1) && ($coordOriginCol<=8) && ($coordOriginCol>=1) && ($coordOriginRow<=8);
+    }
 
     private function parseFen() {
         // Remove carriage returns, tabs, white spaces
@@ -242,342 +242,342 @@ class FenBoard {
         $isCoordShown = false;
 
         foreach($this->border as $attr) {
-    		if($attr == self::VALUE_BORDER_SOLID) {
-				$this->isBorderShownTop    = true;
-				$this->isBorderShownBottom = true;
-				$this->isBorderShownLeft   = true;
-				$this->isBorderShownRight  = true;
-				$this->isBorderStyleSimple = true;
-    		}
-    		elseif($attr == self::VALUE_BORDER_DOUBLE) {
-				$this->isBorderShownTop    = true;
-				$this->isBorderShownBottom = true;
-				$this->isBorderShownLeft   = true;
-				$this->isBorderShownRight  = true;
-				$this->isBorderStyleSimple = false;
-    		}
-    		elseif($this->border_isCoordinate($attr)) {
-    			$isCoordShown = true;
-    			$this->coordOriginCol = ord($attr[0]) - 0x61;
-    			$this->coordOriginRow = ord($attr[1]) - 0x31;
-				if(($this->coordOriginCol + $this->colcount > 8) || ($this->coordOriginRow + $this->rowcount > 8))
-				{
-					$this->coordOriginCol = 0;
-					$this->coordOriginRow = 0;
-				}
-				$this->isCoordShownLeft   = $this->isBorderShownLeft   = ($this->coordOriginCol                   == 0);
-				$this->isCoordShownRight  = $this->isBorderShownRight  = ($this->coordOriginCol + $this->colcount == 8);
-				$this->isCoordShownBottom = $this->isBorderShownBottom = ($this->coordOriginRow                   == 0);
-				$this->isCoordShownTop    = $this->isBorderShownTop    = ($this->coordOriginRow + $this->rowcount == 8);
-    		}
-    		elseif($attr == self::VALUE_BORDER_SQUARE) {
-				$this->isBorderShownTop    = true;
-				$this->isBorderShownBottom = true;
-				$this->isBorderShownLeft   = true;
-				$this->isBorderShownRight  = true;
-				$this->isCornerStyleRound  = false;
-    		}
-    		elseif($attr == self::VALUE_BORDER_ROUND) {
-				$this->isBorderShownTop    = true;
-				$this->isBorderShownBottom = true;
-				$this->isBorderShownLeft   = true;
-				$this->isBorderShownRight  = true;
-				$this->isCornerStyleRound  = true;
-    		}
-	    	elseif($attr == self::VALUE_BORDER_PAD) {
-	    		$this->isCoordPadded = true;
-	    	}
-	    	elseif($this->border_isNSEO($attr)) {
-				$this->isCoordShownTop    = false;
-				$this->isCoordShownBottom = false;
-				$this->isCoordShownLeft   = false;
-				$this->isCoordShownRight  = false;
-				for($x=0; $x<strlen($attr); $x++) {
-					switch ($attr[$x]) {
-						case "n": $this->isCoordShownTop    = true; break;
-						case "s": $this->isCoordShownBottom = true; break;
-						case "e": $this->isCoordShownRight  = true; break;
-						case "o": $this->isCoordShownLeft   = true; break;
-					}
-				}
-				if(!$isCoordShown) {
-					// Border can't be overridden if board origin is already specified
-					$this->isBorderShownLeft   = $this->isCoordShownLeft;
-					$this->isBorderShownRight  = $this->isCoordShownRight;
-					$this->isBorderShownBottom = $this->isCoordShownBottom;
-					$this->isBorderShownTop    = $this->isCoordShownTop;
-				}
-			}
-    	}
+            if($attr == self::VALUE_BORDER_SOLID) {
+                $this->isBorderShownTop    = true;
+                $this->isBorderShownBottom = true;
+                $this->isBorderShownLeft   = true;
+                $this->isBorderShownRight  = true;
+                $this->isBorderStyleSimple = true;
+            }
+            elseif($attr == self::VALUE_BORDER_DOUBLE) {
+                $this->isBorderShownTop    = true;
+                $this->isBorderShownBottom = true;
+                $this->isBorderShownLeft   = true;
+                $this->isBorderShownRight  = true;
+                $this->isBorderStyleSimple = false;
+            }
+            elseif($this->border_isCoordinate($attr)) {
+                $isCoordShown = true;
+                $this->coordOriginCol = ord($attr[0]) - 0x61;
+                $this->coordOriginRow = ord($attr[1]) - 0x31;
+                if(($this->coordOriginCol + $this->colcount > 8) || ($this->coordOriginRow + $this->rowcount > 8))
+                {
+                    $this->coordOriginCol = 0;
+                    $this->coordOriginRow = 0;
+                }
+                $this->isCoordShownLeft   = $this->isBorderShownLeft   = ($this->coordOriginCol                   == 0);
+                $this->isCoordShownRight  = $this->isBorderShownRight  = ($this->coordOriginCol + $this->colcount == 8);
+                $this->isCoordShownBottom = $this->isBorderShownBottom = ($this->coordOriginRow                   == 0);
+                $this->isCoordShownTop    = $this->isBorderShownTop    = ($this->coordOriginRow + $this->rowcount == 8);
+            }
+            elseif($attr == self::VALUE_BORDER_SQUARE) {
+                $this->isBorderShownTop    = true;
+                $this->isBorderShownBottom = true;
+                $this->isBorderShownLeft   = true;
+                $this->isBorderShownRight  = true;
+                $this->isCornerStyleRound  = false;
+            }
+            elseif($attr == self::VALUE_BORDER_ROUND) {
+                $this->isBorderShownTop    = true;
+                $this->isBorderShownBottom = true;
+                $this->isBorderShownLeft   = true;
+                $this->isBorderShownRight  = true;
+                $this->isCornerStyleRound  = true;
+            }
+            elseif($attr == self::VALUE_BORDER_PAD) {
+                $this->isCoordPadded = true;
+            }
+            elseif($this->border_isNSEO($attr)) {
+                $this->isCoordShownTop    = false;
+                $this->isCoordShownBottom = false;
+                $this->isCoordShownLeft   = false;
+                $this->isCoordShownRight  = false;
+                for($x=0; $x<strlen($attr); $x++) {
+                    switch ($attr[$x]) {
+                        case "n": $this->isCoordShownTop    = true; break;
+                        case "s": $this->isCoordShownBottom = true; break;
+                        case "e": $this->isCoordShownRight  = true; break;
+                        case "o": $this->isCoordShownLeft   = true; break;
+                    }
+                }
+                if(!$isCoordShown) {
+                    // Border can't be overridden if board origin is already specified
+                    $this->isBorderShownLeft   = $this->isCoordShownLeft;
+                    $this->isBorderShownRight  = $this->isCoordShownRight;
+                    $this->isBorderShownBottom = $this->isCoordShownBottom;
+                    $this->isBorderShownTop    = $this->isCoordShownTop;
+                }
+            }
+        }
 
-    	//Coordinates shown only if isCoordShown is true
-		$this->isCoordShownLeft   = $isCoordShown && $this->isCoordShownLeft;
-		$this->isCoordShownRight  = $isCoordShown && $this->isCoordShownRight;
-		$this->isCoordShownBottom = $isCoordShown && $this->isCoordShownBottom;
-		$this->isCoordShownTop    = $isCoordShown && $this->isCoordShownTop;
+        //Coordinates shown only if isCoordShown is true
+        $this->isCoordShownLeft   = $isCoordShown && $this->isCoordShownLeft;
+        $this->isCoordShownRight  = $isCoordShown && $this->isCoordShownRight;
+        $this->isCoordShownBottom = $isCoordShown && $this->isCoordShownBottom;
+        $this->isCoordShownTop    = $isCoordShown && $this->isCoordShownTop;
 
         return true;
     }
 
     private function generateColorHTML() {
         if(! $this->parsed_ok) {
-			return '<span style="color:red; font-weight: bold; font-family:monospace;">PARSE ERROR</span>';
+            return '<span style="color:red; font-weight: bold; font-family:monospace;">PARSE ERROR</span>';
         }
 
-		if( ($this->colcount == 0) || ($this->rowcount == 0) ) {
-			return "";			//empty chess tag
-		}
+        if( ($this->colcount == 0) || ($this->rowcount == 0) ) {
+            return "";          //empty chess tag
+        }
 
-	    $generatedHTML="";
-		$this->cclass = self::VALUE_CLASS_COLOR_TABLE . ($this->cclass == "" ? "" : " " . $this->cclass);
+        $generatedHTML="";
+        $this->cclass = self::VALUE_CLASS_COLOR_TABLE . ($this->cclass == "" ? "" : " " . $this->cclass);
 
-    	/* ----- Chess table ---------------------------------------------------------------------------------------------------- */
-    	$generatedHTML	.=	'<table class="' . $this->cclass . '"'
-    					. 	($this->cstyle != "" ? ' style="'.$this->cstyle.'"' : "")
-    					. 	'>';
+        /* ----- Chess table ---------------------------------------------------------------------------------------------------- */
+        $generatedHTML  .=  '<table class="' . $this->cclass . '"'
+                        .   ($this->cstyle != "" ? ' style="'.$this->cstyle.'"' : "")
+                        .   '>';
 
-    	/* ----- Top cols ------------------------------------------------------------------------------------------------------- */
+        /* ----- Top cols ------------------------------------------------------------------------------------------------------- */
 
-	    if($this->isCoordShownTop) {
-	    	$generatedHTML.='<tr>';
-	    	$generatedHTML.=($this->isCoordShownLeft || $this->isCoordPadded ? "<td>&nbsp;</td>" : "") .
-	    	            '<td class="cols">' . substr(self::$COORD_COLS,$this->coordOriginCol,$this->colcount) . '</td>' .
-	    	            ($this->isCoordShownRight || $this->isCoordPadded ? "<td>&nbsp;</td>" : "");
-	    	$generatedHTML.='</tr>';
-	    }
-		elseif($this->isCoordPadded) {
-	    	$generatedHTML.='<tr>';
-	    	$generatedHTML.=($this->isCoordShownLeft || $this->isCoordPadded ? "<td>&nbsp;</td>" : "") .
-	    	            '<td class="cols">' . mb_substr(self::$U_MERIDA_FRAME_COL_PADDING,0,$this->colcount,"UTF-8") . '</td>' .
-	    	            ($this->isCoordShownRight || $this->isCoordPadded ? "<td>&nbsp;</td>" : "");
-	    	$generatedHTML.='</tr>';
-		}
-    	/* ----- Left rows ------------------------------------------------------------------------------------------------------ */
+        if($this->isCoordShownTop) {
+            $generatedHTML.='<tr>';
+            $generatedHTML.=($this->isCoordShownLeft || $this->isCoordPadded ? "<td>&nbsp;</td>" : "") .
+                        '<td class="cols">' . substr(self::$COORD_COLS,$this->coordOriginCol,$this->colcount) . '</td>' .
+                        ($this->isCoordShownRight || $this->isCoordPadded ? "<td>&nbsp;</td>" : "");
+            $generatedHTML.='</tr>';
+        }
+        elseif($this->isCoordPadded) {
+            $generatedHTML.='<tr>';
+            $generatedHTML.=($this->isCoordShownLeft || $this->isCoordPadded ? "<td>&nbsp;</td>" : "") .
+                        '<td class="cols">' . mb_substr(self::$U_MERIDA_FRAME_COL_PADDING,0,$this->colcount,"UTF-8") . '</td>' .
+                        ($this->isCoordShownRight || $this->isCoordPadded ? "<td>&nbsp;</td>" : "");
+            $generatedHTML.='</tr>';
+        }
+        /* ----- Left rows ------------------------------------------------------------------------------------------------------ */
 
         $generatedHTML.='<tr>';
 
-	    if($this->isCoordShownLeft) {
-	    	$generatedHTML.='<td class="rows">';
-	    	$generatedHTML.=substr(self::$COORD_ROWS,(8-$this->coordOriginRow-$this->rowcount)*6,$this->rowcount*6);
-	    	$generatedHTML.='</td>';
-	    }
-		elseif($this->isCoordPadded) {
-	    	$generatedHTML.='<td class="rows">';
-			$generatedHTML.=mb_substr(self::$U_MERIDA_FRAME_ROW_PADDING,0,$this->rowcount*6,"UTF-8");
-	    	$generatedHTML.='</td>';
-		}
+        if($this->isCoordShownLeft) {
+            $generatedHTML.='<td class="rows">';
+            $generatedHTML.=substr(self::$COORD_ROWS,(8-$this->coordOriginRow-$this->rowcount)*6,$this->rowcount*6);
+            $generatedHTML.='</td>';
+        }
+        elseif($this->isCoordPadded) {
+            $generatedHTML.='<td class="rows">';
+            $generatedHTML.=mb_substr(self::$U_MERIDA_FRAME_ROW_PADDING,0,$this->rowcount*6,"UTF-8");
+            $generatedHTML.='</td>';
+        }
 
-    	/* ----- Board ---------------------------------------------------------------------------------------------------------- */
+        /* ----- Board ---------------------------------------------------------------------------------------------------------- */
 
-    	$generatedSq = "";
-    	$generatedBg = "";
-    	$generatedFg = "";
+        $generatedSq = "";
+        $generatedBg = "";
+        $generatedFg = "";
 
-	    $isTopLeftSquareLight = ($this->coordOriginRow . $this->coordOriginCol . $this->rowcount) & 1;		/* 0 light, 1 dark*/
-	    for($row=0; $row<$this->rowcount; $row++) {
-		    $isALightSquare = ($row + $isTopLeftSquareLight) & 1 ? false : true;
-		    $inputRow       = $this->fencode[$row];
-		    $outputSqRow    = "";
-		    $outputBgRow    = "";
-		    $outputFgRow    = "";
-		    $isHLOn         = false;
+        $isTopLeftSquareLight = ($this->coordOriginRow . $this->coordOriginCol . $this->rowcount) & 1;      /* 0 light, 1 dark*/
+        for($row=0; $row<$this->rowcount; $row++) {
+            $isALightSquare = ($row + $isTopLeftSquareLight) & 1 ? false : true;
+            $inputRow       = $this->fencode[$row];
+            $outputSqRow    = "";
+            $outputBgRow    = "";
+            $outputFgRow    = "";
+            $isHLOn         = false;
 
-	        for($col=0; $col<strlen($inputRow); $col++) {
-	    		$cell=$inputRow[$col];
+            for($col=0; $col<strlen($inputRow); $col++) {
+                $cell=$inputRow[$col];
 
-        		if($cell == "(") {
+                if($cell == "(") {
                     if(!$isHLOn) {
                         $outputSqRow .= '<span class="'.self::VALUE_CLASS_COLOR_SPAN_HL.'">';
                     }
                     $isHLOn = true;
                 }
-	        	elseif($cell == ")") {
+                elseif($cell == ")") {
                     if($isHLOn) {
                         $outputSqRow .= '</span>';
                     }
                     $isHLOn = false;
                 }
-		        else {
-					$idx=strpos(self::$FEN,$cell);
-					if($idx!==false) {
-						$outputFgRow .= mb_substr(self::$U_MERIDA_LIGHT,$idx,1,"UTF-8");
-						$outputBgRow .= mb_substr(self::$U_MERIDA_PIECE_BG,$idx,1,"UTF-8");
-					}
-					$outputSqRow .= $isALightSquare ? mb_substr(self::$U_MERIDA_BOARD_SQUARE_ROW,0,1,"UTF-8") : mb_substr(self::$U_MERIDA_BOARD_SQUARE_ROW,1,1,"UTF-8");
-		        	$isALightSquare = !$isALightSquare;
-	        	}
-			}
-		    $generatedSq.=$outputSqRow . ($isHLOn ? '</span>' : "") . "<br/>";
-		    $generatedBg.=$outputBgRow . "<br/>";
-		    $generatedFg.=$outputFgRow . "<br/>";
-		}
-
-		$boardStyle=($this->isBorderShownTop ? "" : "border-top:none !important;")
-						.($this->isBorderShownBottom ? "" : "border-bottom:none !important;")
-						.($this->isBorderShownLeft ? "" : "border-left:none !important;")
-						.($this->isBorderShownRight ? "" : "border-right:none !important;");
-
-    	$generatedHTML	.=	'<td class="board" style="width: '.$this->colcount.'em;'.$boardStyle.'">'
-    					.	'<div class="board">'
-    					.	'<div class="sq">'.$generatedSq.'</div>'
-    					.	'<div class="pcbg">'.$generatedBg.'</div>'
-    					.	'<div class="pcfg">'.$generatedFg.'</div>'
-    					.	'</div></td>';
-
-    	/* ----- Right Rows ----------------------------------------------------------------------------------------------------- */
-
-	    if($this->isCoordShownRight)
-	    {
-	    	$generatedHTML.='<td class="rows">';
-	    	$generatedHTML.=substr(self::$COORD_ROWS,(8-$this->coordOriginRow-$this->rowcount)*6,$this->rowcount*6);
-	    	$generatedHTML.='</td>';
-	    }
-		else if($this->isCoordPadded)
-		{
-	    	$generatedHTML.='<td class="rows">';
-			$generatedHTML.=mb_substr(self::$U_MERIDA_FRAME_ROW_PADDING,0,$this->rowcount*6,"UTF-8");
-	    	$generatedHTML.='</td>';
-		}
-
-    	$generatedHTML.='</tr>';
-
-    	/* ----- Bottom Cols --- ------------------------------------------------------------------------------------------------ */
-
-	    if($this->isCoordShownBottom)
-	    {
-	    	$generatedHTML.='<tr>';
-	    	$generatedHTML.=($this->isCoordShownLeft || $this->isCoordPadded ? "<td>&nbsp;</td>" : "") .
-	    	            '<td class="cols">' . substr(self::$COORD_COLS,$this->coordOriginCol,$this->colcount) . '</td>' .
-	    	            ($this->isCoordShownRight || $this->isCoordPadded ? "<td>&nbsp;</td>" : "");
-	    	$generatedHTML.='</tr>';
-	    }
-		else if($this->isCoordPadded)
-		{
-	    	$generatedHTML.='<tr>';
-	    	$generatedHTML.=($this->isCoordShownLeft || $this->isCoordPadded ? "<td>&nbsp;</td>" : "") .
-	    	            '<td class="cols">' . mb_substr(self::$U_MERIDA_FRAME_COL_PADDING,0,$this->colcount,"UTF-8") . '</td>' .
-	    	            ($this->isCoordShownRight || $this->isCoordPadded ? "<td>&nbsp;</td>" : "");
-	    	$generatedHTML.='</tr>';
-		}
-
-    	$generatedHTML.='</table>';
-
-	    return $generatedHTML;
-    }
-
-	private function generateBWHTML() {
-        if(! $this->parsed_ok) {
-			return '<span style="color:red; font-weight: bold; font-family:monospace;">PARSE ERROR</span>';
+                else {
+                    $idx=strpos(self::$FEN,$cell);
+                    if($idx!==false) {
+                        $outputFgRow .= mb_substr(self::$U_MERIDA_LIGHT,$idx,1,"UTF-8");
+                        $outputBgRow .= mb_substr(self::$U_MERIDA_PIECE_BG,$idx,1,"UTF-8");
+                    }
+                    $outputSqRow .= $isALightSquare ? mb_substr(self::$U_MERIDA_BOARD_SQUARE_ROW,0,1,"UTF-8") : mb_substr(self::$U_MERIDA_BOARD_SQUARE_ROW,1,1,"UTF-8");
+                    $isALightSquare = !$isALightSquare;
+                }
+            }
+            $generatedSq.=$outputSqRow . ($isHLOn ? '</span>' : "") . "<br/>";
+            $generatedBg.=$outputBgRow . "<br/>";
+            $generatedFg.=$outputFgRow . "<br/>";
         }
 
-		if( ($this->colcount == 0) || ($this->rowcount == 0) ) {
-			return "";			//empty chess tag
-		}
+        $boardStyle=($this->isBorderShownTop ? "" : "border-top:none !important;")
+                        .($this->isBorderShownBottom ? "" : "border-bottom:none !important;")
+                        .($this->isBorderShownLeft ? "" : "border-left:none !important;")
+                        .($this->isBorderShownRight ? "" : "border-right:none !important;");
 
-		if($this->isBorderStyleSimple) {
-			$boardTop = $this->isCoordShownTop
-							? ($this->isBorderShownTop ? self::$U_MERIDA_FRAME_S_TOP_COORD : self::$FRAME_COLS)
-							: ($this->isBorderShownTop ? self::$U_MERIDA_FRAME_S_TOP : self::$U_MERIDA_FRAME_PADDING);
-			$boardRight = $this->isCoordShownRight
-							? ($this->isBorderShownRight ? self::$U_MERIDA_FRAME_S_RIGHT_COORD : self::$FRAME_ROWS)
-							: ($this->isBorderShownRight ? self::$U_MERIDA_FRAME_S_RIGHT : self::$U_MERIDA_FRAME_PADDING);
-			$boardBottom = $this->isCoordShownBottom
-							? ($this->isBorderShownBottom ? self::$U_MERIDA_FRAME_S_BOTTOM_COORD : self::$FRAME_COLS)
-							: ($this->isBorderShownBottom ? self::$U_MERIDA_FRAME_S_BOTTOM : self::$U_MERIDA_FRAME_PADDING);
-			$boardLeft = $this->isCoordShownLeft
-							? ($this->isBorderShownLeft ? self::$U_MERIDA_FRAME_S_LEFT_COORD : self::$FRAME_ROWS)
-							: ($this->isBorderShownLeft ? self::$U_MERIDA_FRAME_S_LEFT : self::$U_MERIDA_FRAME_PADDING);
-			$boardCorner = $this->isCornerStyleRound ? self::$U_MERIDA_FRAME_S_ROUND_CORNER : self::$U_MERIDA_FRAME_S_SQUARE_CORNER;
-		}
-		else {
-			$boardTop = $this->isCoordShownTop
-							? ($this->isBorderShownTop ? self::$U_MERIDA_FRAME_D_TOP_COORD : self::$FRAME_COLS)
-							: ($this->isBorderShownTop ? self::$U_MERIDA_FRAME_D_TOP : self::$U_MERIDA_FRAME_PADDING);
-			$boardRight = $this->isCoordShownRight
-							? ($this->isBorderShownRight ? self::$U_MERIDA_FRAME_D_RIGHT_COORD : self::$FRAME_ROWS)
-							: ($this->isBorderShownRight ? self::$U_MERIDA_FRAME_D_RIGHT : self::$U_MERIDA_FRAME_PADDING);
-			$boardBottom = $this->isCoordShownBottom
-							? ($this->isBorderShownBottom ? self::$U_MERIDA_FRAME_D_BOTTOM_COORD : self::$FRAME_COLS)
-							: ($this->isBorderShownBottom ? self::$U_MERIDA_FRAME_D_BOTTOM : self::$U_MERIDA_FRAME_PADDING);
-			$boardLeft = $this->isCoordShownLeft
-							? ($this->isBorderShownLeft ? self::$U_MERIDA_FRAME_D_LEFT_COORD : self::$FRAME_ROWS)
-							: ($this->isBorderShownLeft ? self::$U_MERIDA_FRAME_D_LEFT : self::$U_MERIDA_FRAME_PADDING);
-			$boardCorner = $this->isCornerStyleRound ? self::$U_MERIDA_FRAME_D_ROUND_CORNER : self::$U_MERIDA_FRAME_D_SQUARE_CORNER;
-		}
+        $generatedHTML  .=  '<td class="board" style="width: '.$this->colcount.'em;'.$boardStyle.'">'
+                        .   '<div class="board">'
+                        .   '<div class="sq">'.$generatedSq.'</div>'
+                        .   '<div class="pcbg">'.$generatedBg.'</div>'
+                        .   '<div class="pcfg">'.$generatedFg.'</div>'
+                        .   '</div></td>';
 
-	    $generatedHTML="";
-		$divWidth =	(($this->isCoordShownLeft || $this->isBorderShownLeft || $this->isCoordPadded) ? 1 : 0)
-	                 + $this->colcount
-	                 +(($this->isCoordShownRight || $this->isBorderShownRight || $this->isCoordPadded) ? 1 : 0);
+        /* ----- Right Rows ----------------------------------------------------------------------------------------------------- */
 
-		$this->cclass = self::VALUE_CLASS_BW_TABLE . ($this->cclass == "" ? "" : " " . $this->cclass);
+        if($this->isCoordShownRight)
+        {
+            $generatedHTML.='<td class="rows">';
+            $generatedHTML.=substr(self::$COORD_ROWS,(8-$this->coordOriginRow-$this->rowcount)*6,$this->rowcount*6);
+            $generatedHTML.='</td>';
+        }
+        else if($this->isCoordPadded)
+        {
+            $generatedHTML.='<td class="rows">';
+            $generatedHTML.=mb_substr(self::$U_MERIDA_FRAME_ROW_PADDING,0,$this->rowcount*6,"UTF-8");
+            $generatedHTML.='</td>';
+        }
 
-    	/* ----- Chess table ---------------------------------------------------------------------------------------------------- */
-    	$generatedHTML.='<table class="' . $this->cclass . '"' . ($this->cstyle != "" ? ' style="'.$this->cstyle.'"' : "") . '>' .'<tr><td>';
+        $generatedHTML.='</tr>';
 
-	    if($this->isCoordShownTop || $this->isBorderShownTop || $this->isCoordPadded) {
-	    	$generatedHTML.= ($this->isBorderShownLeft && $this->isBorderShownTop
-	    					? mb_substr($boardCorner,0,1)
-	    					: ($this->isBorderShownLeft || $this->isCoordShownLeft || $this->isCoordPadded ? self::$U_MERIDA_FRAME_BLANK : ""))
-	    	  	        .	mb_substr($boardTop,$this->coordOriginCol,$this->colcount)
-						.	($this->isBorderShownRight && $this->isBorderShownTop
-	    					? mb_substr($boardCorner,1,1)
-	    	  	        	: ($this->isBorderShownRight || $this->isCoordShownRight || $this->isCoordPadded ? self::$U_MERIDA_FRAME_BLANK : ""))
-	    	            .	"<br/>";
-	    }
+        /* ----- Bottom Cols --- ------------------------------------------------------------------------------------------------ */
 
-	    $isTopLeftSquareLight = ($this->coordOriginRow . $this->coordOriginCol . $this->rowcount) & 1;		/* 0 light, 1 dark*/
-	    for($row=0; $row<$this->rowcount; $row++) {
-		    $isALightSquare = ($row+$isTopLeftSquareLight)&1 ? false : true;
-		    $inputRow       = $this->fencode[$row];
-		    $outputRow      = "";
-		    $isHLOn         = false;
+        if($this->isCoordShownBottom)
+        {
+            $generatedHTML.='<tr>';
+            $generatedHTML.=($this->isCoordShownLeft || $this->isCoordPadded ? "<td>&nbsp;</td>" : "") .
+                        '<td class="cols">' . substr(self::$COORD_COLS,$this->coordOriginCol,$this->colcount) . '</td>' .
+                        ($this->isCoordShownRight || $this->isCoordPadded ? "<td>&nbsp;</td>" : "");
+            $generatedHTML.='</tr>';
+        }
+        else if($this->isCoordPadded)
+        {
+            $generatedHTML.='<tr>';
+            $generatedHTML.=($this->isCoordShownLeft || $this->isCoordPadded ? "<td>&nbsp;</td>" : "") .
+                        '<td class="cols">' . mb_substr(self::$U_MERIDA_FRAME_COL_PADDING,0,$this->colcount,"UTF-8") . '</td>' .
+                        ($this->isCoordShownRight || $this->isCoordPadded ? "<td>&nbsp;</td>" : "");
+            $generatedHTML.='</tr>';
+        }
 
-	        for($col=0; $col<strlen($inputRow); $col++) {
-	    		$cell=mb_substr($inputRow,$col,1);
+        $generatedHTML.='</table>';
 
-        		if($cell == "(") {
+        return $generatedHTML;
+    }
+
+    private function generateBWHTML() {
+        if(! $this->parsed_ok) {
+            return '<span style="color:red; font-weight: bold; font-family:monospace;">PARSE ERROR</span>';
+        }
+
+        if( ($this->colcount == 0) || ($this->rowcount == 0) ) {
+            return "";          //empty chess tag
+        }
+
+        if($this->isBorderStyleSimple) {
+            $boardTop = $this->isCoordShownTop
+                            ? ($this->isBorderShownTop ? self::$U_MERIDA_FRAME_S_TOP_COORD : self::$FRAME_COLS)
+                            : ($this->isBorderShownTop ? self::$U_MERIDA_FRAME_S_TOP : self::$U_MERIDA_FRAME_PADDING);
+            $boardRight = $this->isCoordShownRight
+                            ? ($this->isBorderShownRight ? self::$U_MERIDA_FRAME_S_RIGHT_COORD : self::$FRAME_ROWS)
+                            : ($this->isBorderShownRight ? self::$U_MERIDA_FRAME_S_RIGHT : self::$U_MERIDA_FRAME_PADDING);
+            $boardBottom = $this->isCoordShownBottom
+                            ? ($this->isBorderShownBottom ? self::$U_MERIDA_FRAME_S_BOTTOM_COORD : self::$FRAME_COLS)
+                            : ($this->isBorderShownBottom ? self::$U_MERIDA_FRAME_S_BOTTOM : self::$U_MERIDA_FRAME_PADDING);
+            $boardLeft = $this->isCoordShownLeft
+                            ? ($this->isBorderShownLeft ? self::$U_MERIDA_FRAME_S_LEFT_COORD : self::$FRAME_ROWS)
+                            : ($this->isBorderShownLeft ? self::$U_MERIDA_FRAME_S_LEFT : self::$U_MERIDA_FRAME_PADDING);
+            $boardCorner = $this->isCornerStyleRound ? self::$U_MERIDA_FRAME_S_ROUND_CORNER : self::$U_MERIDA_FRAME_S_SQUARE_CORNER;
+        }
+        else {
+            $boardTop = $this->isCoordShownTop
+                            ? ($this->isBorderShownTop ? self::$U_MERIDA_FRAME_D_TOP_COORD : self::$FRAME_COLS)
+                            : ($this->isBorderShownTop ? self::$U_MERIDA_FRAME_D_TOP : self::$U_MERIDA_FRAME_PADDING);
+            $boardRight = $this->isCoordShownRight
+                            ? ($this->isBorderShownRight ? self::$U_MERIDA_FRAME_D_RIGHT_COORD : self::$FRAME_ROWS)
+                            : ($this->isBorderShownRight ? self::$U_MERIDA_FRAME_D_RIGHT : self::$U_MERIDA_FRAME_PADDING);
+            $boardBottom = $this->isCoordShownBottom
+                            ? ($this->isBorderShownBottom ? self::$U_MERIDA_FRAME_D_BOTTOM_COORD : self::$FRAME_COLS)
+                            : ($this->isBorderShownBottom ? self::$U_MERIDA_FRAME_D_BOTTOM : self::$U_MERIDA_FRAME_PADDING);
+            $boardLeft = $this->isCoordShownLeft
+                            ? ($this->isBorderShownLeft ? self::$U_MERIDA_FRAME_D_LEFT_COORD : self::$FRAME_ROWS)
+                            : ($this->isBorderShownLeft ? self::$U_MERIDA_FRAME_D_LEFT : self::$U_MERIDA_FRAME_PADDING);
+            $boardCorner = $this->isCornerStyleRound ? self::$U_MERIDA_FRAME_D_ROUND_CORNER : self::$U_MERIDA_FRAME_D_SQUARE_CORNER;
+        }
+
+        $generatedHTML="";
+        $divWidth = (($this->isCoordShownLeft || $this->isBorderShownLeft || $this->isCoordPadded) ? 1 : 0)
+                     + $this->colcount
+                     +(($this->isCoordShownRight || $this->isBorderShownRight || $this->isCoordPadded) ? 1 : 0);
+
+        $this->cclass = self::VALUE_CLASS_BW_TABLE . ($this->cclass == "" ? "" : " " . $this->cclass);
+
+        /* ----- Chess table ---------------------------------------------------------------------------------------------------- */
+        $generatedHTML.='<table class="' . $this->cclass . '"' . ($this->cstyle != "" ? ' style="'.$this->cstyle.'"' : "") . '>' .'<tr><td>';
+
+        if($this->isCoordShownTop || $this->isBorderShownTop || $this->isCoordPadded) {
+            $generatedHTML.= ($this->isBorderShownLeft && $this->isBorderShownTop
+                            ? mb_substr($boardCorner,0,1)
+                            : ($this->isBorderShownLeft || $this->isCoordShownLeft || $this->isCoordPadded ? self::$U_MERIDA_FRAME_BLANK : ""))
+                        .   mb_substr($boardTop,$this->coordOriginCol,$this->colcount)
+                        .   ($this->isBorderShownRight && $this->isBorderShownTop
+                            ? mb_substr($boardCorner,1,1)
+                            : ($this->isBorderShownRight || $this->isCoordShownRight || $this->isCoordPadded ? self::$U_MERIDA_FRAME_BLANK : ""))
+                        .   "<br/>";
+        }
+
+        $isTopLeftSquareLight = ($this->coordOriginRow . $this->coordOriginCol . $this->rowcount) & 1;      /* 0 light, 1 dark*/
+        for($row=0; $row<$this->rowcount; $row++) {
+            $isALightSquare = ($row+$isTopLeftSquareLight)&1 ? false : true;
+            $inputRow       = $this->fencode[$row];
+            $outputRow      = "";
+            $isHLOn         = false;
+
+            for($col=0; $col<strlen($inputRow); $col++) {
+                $cell=mb_substr($inputRow,$col,1);
+
+                if($cell == "(") {
                     if(!$isHLOn) {
                         $outputRow .= '<span class="'.self::VALUE_CLASS_BW_SPAN_HL.'">';
                     }
                     $isHLOn = true;
                 }
-	        	elseif($cell == ")") {
+                elseif($cell == ")") {
                     if($isHLOn) {
                         $outputRow .= '</span>';
                     }
                     $isHLOn = false;
                 }
-		        else {
-					$idx=strpos(self::$FEN,$cell);
-					if($idx!==false) {
-						$outputRow .= $isALightSquare ? mb_substr(self::$U_MERIDA_LIGHT,$idx,1) : mb_substr(self::$U_MERIDA_DARK,$idx,1);
-					}
-		        	$isALightSquare = !$isALightSquare;
-	        	}
-			}
-	    	$generatedHTML	.=	(($this->isCoordShownLeft || $this->isBorderShownLeft || $this->isCoordPadded) ? mb_substr($boardLeft,$this->coordOriginRow+$this->rowcount-1-$row,1) : "")
-	    					.	$outputRow
-						    .	($isHLOn ? '</span>' : "")
-	    					.	(($this->isCoordShownRight || $this->isBorderShownRight || $this->isCoordPadded) ? mb_substr($boardRight,$this->coordOriginRow+$this->rowcount-1-$row,1) : "")
-						    .	"<br/>";
-		}
+                else {
+                    $idx=strpos(self::$FEN,$cell);
+                    if($idx!==false) {
+                        $outputRow .= $isALightSquare ? mb_substr(self::$U_MERIDA_LIGHT,$idx,1) : mb_substr(self::$U_MERIDA_DARK,$idx,1);
+                    }
+                    $isALightSquare = !$isALightSquare;
+                }
+            }
+            $generatedHTML  .=  (($this->isCoordShownLeft || $this->isBorderShownLeft || $this->isCoordPadded) ? mb_substr($boardLeft,$this->coordOriginRow+$this->rowcount-1-$row,1) : "")
+                            .   $outputRow
+                            .   ($isHLOn ? '</span>' : "")
+                            .   (($this->isCoordShownRight || $this->isBorderShownRight || $this->isCoordPadded) ? mb_substr($boardRight,$this->coordOriginRow+$this->rowcount-1-$row,1) : "")
+                            .   "<br/>";
+        }
 
-	    if($this->isCoordShownBottom || $this->isBorderShownBottom || $this->isCoordPadded) {
-	    	$generatedHTML.=	($this->isBorderShownLeft && $this->isBorderShownBottom
-	    					? mb_substr($boardCorner,2,1)
-	    					: ($this->isBorderShownLeft || $this->isCoordShownLeft || $this->isCoordPadded ? self::$U_MERIDA_FRAME_BLANK : ""))
-	    	  	        .	mb_substr($boardBottom,$this->coordOriginCol,$this->colcount)
-						.	($this->isBorderShownRight && $this->isBorderShownBottom
-	    	  	        	? mb_substr($boardCorner,3,1)
-	    	  	        	: ($this->isBorderShownRight || $this->isCoordShownRight || $this->isCoordPadded ? self::$U_MERIDA_FRAME_BLANK : ""))
-	    	            .	"<br/>";
-	    }
+        if($this->isCoordShownBottom || $this->isBorderShownBottom || $this->isCoordPadded) {
+            $generatedHTML.=    ($this->isBorderShownLeft && $this->isBorderShownBottom
+                            ? mb_substr($boardCorner,2,1)
+                            : ($this->isBorderShownLeft || $this->isCoordShownLeft || $this->isCoordPadded ? self::$U_MERIDA_FRAME_BLANK : ""))
+                        .   mb_substr($boardBottom,$this->coordOriginCol,$this->colcount)
+                        .   ($this->isBorderShownRight && $this->isBorderShownBottom
+                            ? mb_substr($boardCorner,3,1)
+                            : ($this->isBorderShownRight || $this->isCoordShownRight || $this->isCoordPadded ? self::$U_MERIDA_FRAME_BLANK : ""))
+                        .   "<br/>";
+        }
 
-    	$generatedHTML.='<div class="nowrap" style="width:'.$divWidth.'em"></div></td></tr></table>';
+        $generatedHTML.='<div class="nowrap" style="width:'.$divWidth.'em"></div></td></tr></table>';
 
-	    return $generatedHTML;
-	}
+        return $generatedHTML;
+    }
 
     public function GetHTML() {
         switch($this->mode) {
@@ -590,7 +590,7 @@ class FenBoard {
             return $this->generateBWHTML();
             break;
         default:
-			return "<span style=\"color:red; font-weight: bold; font-family:monospace;\">Unknown mode $this->mode.</span>";
+            return "<span style=\"color:red; font-weight: bold; font-family:monospace;\">Unknown mode $this->mode.</span>";
         }
     }
 
@@ -606,12 +606,12 @@ class FenTT {
     const CCLASS  = "cclass";
     private static $mode_default = FenBoard::VALUE_MODE_COLOR;
 
-	// Render <fentt>
-	static public function renderFentt( $input, array $args ) {
-	    $border = isset($args[self::BORDER]) ? $args[self::BORDER] : "";
-	    $mode = isset($args[self::MODE]) ? $args[self::MODE] : self::$mode_default;
-	    $cstyle = isset($args[self::CSTYLE]) ? $args[self::CSTYLE] : "";
-	    $cclass = isset($args[self::CCLASS]) ? $args[self::CCLASS] : "";
+    // Render <fentt>
+    static public function renderFentt( $input, array $args ) {
+        $border = isset($args[self::BORDER]) ? $args[self::BORDER] : "";
+        $mode = isset($args[self::MODE]) ? $args[self::MODE] : self::$mode_default;
+        $cstyle = isset($args[self::CSTYLE]) ? $args[self::CSTYLE] : "";
+        $cclass = isset($args[self::CCLASS]) ? $args[self::CCLASS] : "";
         $fencode = $input;
 
         // Generate html for current tag
@@ -622,7 +622,7 @@ class FenTT {
         }
 
         return $board->GetHTML();
-	}
+    }
 }
 
 ?>
