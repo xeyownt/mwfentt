@@ -181,13 +181,13 @@ discard the parts corresponding to active color, castling, etc. In this case, we
   <li><em>Unoccupied squares</em> &mdash; a dot (<code class="kw">.</code>) can be used to specify an unoccupied square. Replacing all
   figures in the notation by an equivalent amount of dots makes it more easy to read in wiki text. So the above position can be
   equivalently written as
-  <code>rnbqkbnr/pppppppp/......../......../......../......../PPPPPPPP/RNBQKBNR</code>
+  <code>rnbqkbnr/pppppppp/......../......../......../......../PPPPPPPP/RNBQKBNR</code>;
   </li>
-  <li><em>White spaces</em> - White spaces, tabs, newlines can be inserted within the notation to improve further the readability
-    in wiki text.
+  <li><em>White spaces</em> &mdash; white spaces, tabs, newlines can be inserted within the notation to improve further the readability
+    in wiki text;
   </li>
   <li><em>Extra symbols</em> &mdash; a plus sign (<code class="kw">+</code>) or x character (<code class="kw">x</code>) can be used to
-    indicate squares of interest on the chessboard.
+    indicate squares of interest on the chessboard;
   </li>
   <li><em>Highlighting squares</em> &mdash; one or several squares can be enclosed within brackets, parens or braces (<code class="kw">(.)</code> 
         <code class="kw">[.]</code> <code class="kw">{.}</code>) to have them highlighted in a different color.
@@ -476,8 +476,7 @@ are very close to those rendered on eg. Wikipedia. This method brings several ad
     <a href="#Compatibility">next section</a> for more information.
   </li>
   <li>The quality of the rendering largely depends on the font rendering engine of your platform. But ClearType (WinXP/Vista) or
-    font anti-aliasing (Linux) give excellent results, even at low pixel per em. See the
-    <a href="screenshots.html">screenshots</a> page to compare the rendering of your platform to others.
+    font anti-aliasing (Linux) give excellent results, even at low pixel per em.
   </li>
 </ul>
 
