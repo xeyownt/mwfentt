@@ -639,20 +639,26 @@ class FenTT {
     const CSTYLE  = "cstyle";
     const CCLASS  = "cclass";
     private static $mode_default = FenBoard::VALUE_MODE_COLOR;
+    private static $border_default = "";
+    private static $cstyle_default = "";
+    private static $cclass_default = "";
 
     // Render <fentt>
     static public function renderFentt( $input, array $args ) {
-        $border = isset($args[self::BORDER]) ? $args[self::BORDER] : "";
+        $border = isset($args[self::BORDER]) ? $args[self::BORDER] : self::$border_default;
         $mode = isset($args[self::MODE]) ? $args[self::MODE] : self::$mode_default;
-        $cstyle = isset($args[self::CSTYLE]) ? $args[self::CSTYLE] : "";
-        $cclass = isset($args[self::CCLASS]) ? $args[self::CCLASS] : "";
+        $cstyle = isset($args[self::CSTYLE]) ? $args[self::CSTYLE] : self::$cstyle_default;
+        $cclass = isset($args[self::CCLASS]) ? $args[self::CCLASS] : self::$cclass_default;
         $fencode = $input;
 
         // Generate html for current tag
         $board = new FenBoard($fencode,$border,$mode,$cstyle,$cclass);
 
         if($board->isempty()) {
-            self::$mode_default = $mode;             // Empty tag - store current mode as default
+            self::$mode_default = $mode;             // Empty tag - store current options as default
+            self::$border_default = $border;         // TODO: Make sure options are valid
+            self::$cstyle_default = $cstyle;
+            self::$cclass_default = $cclass;
         }
 
         return $board->GetHTML();
