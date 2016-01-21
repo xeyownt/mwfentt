@@ -169,9 +169,19 @@ table.bwfentt {
     color: black;
 }
 
-table.bwfentt span.bwhl {
-    /* highlighted square background color */
-    background-color: #FF0;
+table.bwfentt span.bwbrackets {
+    /* highlighted square (brackets) background color (eg. white 43% red = #F77) */
+    background-color: #F77;
+}
+
+table.bwfentt span.bwparens {
+    /* highlighted square (parens) background color (eg. white 31% red = #5F5) */
+    background-color: #5F5;
+}
+
+table.bwfentt span.bwbraces {
+    /* highlighted square (braces) background color (eg. white 50% red = #88F) */
+    background-color: #88F;
 }
 
 /* ----- CUSTOM Styles for COLOR mode --------------------------------------- */
@@ -208,12 +218,30 @@ table.fentt div.sq {
     color: #D18B47;
 }
 
-table.fentt span.hl {
-    /* highlighted light square (eg. 60% green highlighting = #99E15E) */
-    background-color: #99E15E;
+/* Color mixing - Cfr. http://www.w3schools.com/tags/ref_colormixer.asp */
 
-    /* highlighted dark square (eg. 60% green highlighting = #7DB92A) */
-    color: #7DB92A;
+table.fentt span.brackets {
+    /* highlighted light square (brackets) (eg. 60% light + 40% #FF0000 (red) = #FF7C5F) */
+    background-color: #FF7C5F;
+
+    /* highlighted dark square (brackets) (eg. 60% dark + 40% #FF0000 (red) = #E3532B) */
+    color: #E3532B;
+}
+
+table.fentt span.parens {
+    /* highlighted light square (parens) (eg. 60% light + 40% #00FF00 (green) = #99E25F) */
+    background-color: #99E25F;
+
+    /* highlighted dark square (parens) (eg. 60% dark + 40% #00FF00 (green) = #7DB92B) */
+    color: #7DB92B;
+}
+
+table.fentt span.braces {
+    /* highlighted light square (braces) (eg. 60% light + 40% #0000FF (blue) = #997CC5) */
+    background-color: #997CC5;
+
+    /* highlighted dark square (braces) (eg. 60% dark + 40% #0000FF (blue) = #7D5391) */
+    color: #7D5391;
 }
 
 table.fentt div.pcbg {

@@ -48,7 +48,7 @@
             background-color: white;
             color: #840;
         }
-        table.fentt2 span.bwhl {
+        table.fentt2 span.bwparens {
             /* BW mode only */
             background-color: #CCC;
         }
@@ -61,7 +61,7 @@
             background-color: #DDD;
             color: #444;
         }
-        table.fentt2 span.hl {
+        table.fentt2 span.parens {
             /* Color mode only */
             background-color: #6E6EEE;
             color: #2222A1;
@@ -123,6 +123,8 @@
 
 <body>
 
+<fentt mode="color"></fentt>
+
 <div id="leftpane">
 <h2>Content</h2>
 <ul>
@@ -144,32 +146,45 @@
 
 <table class="table1">
 <tr>
-    <td width="300px"><fentt border="a1">rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR</fentt>
+    <td width="300px">
+        <fentt border="a1">rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR</fentt>
     </td>
-    <td><em>Default border style</em> - Default border style is solid with round corner (BW only).
+    <td>
+        <em>Default border style</em> - Default border style is solid with round corner (BW only).
     </td>
 </tr>
 <tr>
-    <td><fentt border="ne">B.../R.xx/..xk/..+x</fentt>
+    <td>
+        <fentt border="ne">B.../R.xx/..xk/..+x</fentt>
     </td>
-    <td><em>Extra symbols</em> - Use '<code class="kw">+</code>' and '<code class="kw">x</code>' in the FEN notation to indicate some
+    <td>
+        <em>Extra symbols</em> - Use '<code class="kw">+</code>' and '<code class="kw">x</code>' in the FEN notation to indicate some
         squares of interests on the board.
     </td>
 </tr>
 <tr>
-    <td><fentt border="ne">(B).../(R.xx)/..(x)k/..+(x)</fentt>
+    <td>
+        <table>
+            <tr>
+                <td><fentt border="ne">(B).../(R.xx)/..(x)k/..+(x)</fentt></td>
+                <td><fentt border="ne">[B].../[R.xx]/..[x]k/..+[x]</fentt></td>
+                <td><fentt border="ne">{B}.../{R.xx}/..{x}k/..+{x}</fentt></td>
+            </tr>
+        </table>
     </td>
-    <td><em>Highlighting</em> - Surround squares with brackets <code class="kw">(</code> ... <code class="kw">)</code> to have them
-        highlighted in a different color.
+    <td>
+        <em>Highlighting</em> - Surround squares with brackets, parens, or braces (<code class="kw">(.)</code> 
+        <code class="kw">[.]</code> <code class="kw">{.}</code>) to have them highlighted in a different color.
     </td>
 </tr>
 <tr>
-    <td><fentt border="ne">
-        +.../
-        R+++/
-        +.../
-        +...
-    </fentt>
+    <td>
+        <fentt border="ne">
+            +.../
+            R+++/
+            +.../
+            +...
+        </fentt>
     </td>
     <td><em>Blanks</em> - HTML may also includes blanks (space/tabs/newlines) for better clarity.
     </td>

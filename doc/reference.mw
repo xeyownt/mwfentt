@@ -189,9 +189,8 @@ discard the parts corresponding to active color, castling, etc. In this case, we
   <li><em>Extra symbols</em> &mdash; a plus sign (<code class="kw">+</code>) or x character (<code class="kw">x</code>) can be used to
     indicate squares of interest on the chessboard.
   </li>
-  <li><em>Highlighting squares</em> &mdash; one or several squares can be enclosed within brackets (<code class="kw">(</code>...
-  <code class="kw">)</code>) to have them
-  highlighted in a different color.
+  <li><em>Highlighting squares</em> &mdash; one or several squares can be enclosed within brackets, parens or braces (<code class="kw">(.)</code> 
+        <code class="kw">[.]</code> <code class="kw">{.}</code>) to have them highlighted in a different color.
   </li>
 </ul>
 
@@ -202,9 +201,9 @@ discard the parts corresponding to active color, castling, etc. In this case, we
   <td>
 <pre>&lt;fentt>
   r n b q k b n r/
-  p p p p p p p p/
-  . . . . . . . ./
-  . . . . . . . ./
+  p p p{p}p p p p/
+  . . .{.}. . . ./
+  . . .{+}. . . ./
   . . . .(+). . ./
   . . . .(.). . ./
   P P P P(P)P P P/
@@ -214,9 +213,9 @@ discard the parts corresponding to active color, castling, etc. In this case, we
   <td>
   <fentt>
     r n b q k b n r/
-    p p p p p p p p/
-    . . . . . . . ./
-    . . . . . . . ./
+    p p p{p}p p p p/
+    . . .{.}. . . ./
+    . . .{+}. . . ./
     . . . .(+). . ./
     . . . .(.). . ./
     P P P P(P)P P P/

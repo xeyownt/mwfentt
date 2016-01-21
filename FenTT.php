@@ -72,8 +72,12 @@ class FenBoard {
     const VALUE_MODE_BW                            = "bw";
     const VALUE_CLASS_BW_TABLE                     = "bwfentt";
     const VALUE_CLASS_COLOR_TABLE                  = "fentt";
-    const VALUE_CLASS_BW_SPAN_HL                   = "bwhl";
-    const VALUE_CLASS_COLOR_SPAN_HL                = "hl";
+    const VALUE_CLASS_BW_SPAN_HL_PARENS            = "bwparens";
+    const VALUE_CLASS_COLOR_SPAN_HL_PARENS         = "parens";
+    const VALUE_CLASS_BW_SPAN_HL_BRACKETS          = "bwbrackets";
+    const VALUE_CLASS_COLOR_SPAN_HL_BRACKETS       = "brackets";
+    const VALUE_CLASS_BW_SPAN_HL_BRACES            = "bwbraces";
+    const VALUE_CLASS_COLOR_SPAN_HL_BRACES         = "braces";
 
     private static $is_decoded                     = false;
     private static $U_MFB                          = '\u00A0'; // Use '\u00A0' for blank (nb-sp)
@@ -221,7 +225,7 @@ class FenBoard {
             $this->fencode);
 
         // Get "flat" FEN code *array* (without highlighting, etc), and get row/col count
-        $flatfencode=str_replace(array("(",")"),"",$this->fencode);
+        $flatfencode=str_replace(array("(",")","[","]","{","}"),"",$this->fencode);
         $flatfencode=explode("/",$flatfencode);
         $this->colcount = strlen($flatfencode[0]);
         $this->rowcount = count($flatfencode);
@@ -380,22 +384,36 @@ class FenBoard {
             $outputSqRow    = "";
             $outputBgRow    = "";
             $outputFgRow    = "";
-            $isHLOn         = false;
+            $isHLOnParens   = false;
+            $isHLOnBrackets  = false;
+            $isHLOnBraces   = false;
 
             for($col=0; $col<strlen($inputRow); $col++) {
                 $cell=$inputRow[$col];
 
-                if($cell == "(") {
-                    if(!$isHLOn) {
-                        $outputSqRow .= '<span class="'.self::VALUE_CLASS_COLOR_SPAN_HL.'">';
-                    }
-                    $isHLOn = true;
+                if($cell == "(" && !$isHLOnParens) {
+                    $outputSqRow .= '<span class="'.self::VALUE_CLASS_COLOR_SPAN_HL_PARENS.'">';
+                    $isHLOnParens = true;
                 }
-                elseif($cell == ")") {
-                    if($isHLOn) {
-                        $outputSqRow .= '</span>';
-                    }
-                    $isHLOn = false;
+                elseif($cell == ")" && $isHLOnParens) {
+                    $outputSqRow .= '</span>';
+                    $isHLOnParens = false;
+                }
+                elseif($cell == "[" && !$isHLOnBrackets) {
+                    $outputSqRow .= '<span class="'.self::VALUE_CLASS_COLOR_SPAN_HL_BRACKETS.'">';
+                    $isHLOnBrackets = true;
+                }
+                elseif($cell == "]" && $isHLOnBrackets) {
+                    $outputSqRow .= '</span>';
+                    $isHLOnBrackets = false;
+                }
+                elseif($cell == "{" && !$isHLOnBraces) {
+                    $outputSqRow .= '<span class="'.self::VALUE_CLASS_COLOR_SPAN_HL_BRACES.'">';
+                    $isHLOnBraces = true;
+                }
+                elseif($cell == "}" && $isHLOnBraces) {
+                    $outputSqRow .= '</span>';
+                    $isHLOnBraces = false;
                 }
                 else {
                     $idx=strpos(self::$FEN,$cell);
@@ -407,7 +425,7 @@ class FenBoard {
                     $isALightSquare = !$isALightSquare;
                 }
             }
-            $generatedSq.=$outputSqRow . ($isHLOn ? '</span>' : "") . "<br/>";
+            $generatedSq.=$outputSqRow . ($isHLOnParens ? '</span>' : "") . ($isHLOnBrackets ? '</span>' : "") . ($isHLOnBraces ? '</span>' : "") . "<br/>";
             $generatedBg.=$outputBgRow . "<br/>";
             $generatedFg.=$outputFgRow . "<br/>";
         }
@@ -531,22 +549,36 @@ class FenBoard {
             $isALightSquare = ($row+$isTopLeftSquareLight)&1 ? false : true;
             $inputRow       = $this->fencode[$row];
             $outputRow      = "";
-            $isHLOn         = false;
+            $isHLOnParens    = false;
+            $isHLOnBrackets   = false;
+            $isHLOnBraces    = false;
 
             for($col=0; $col<strlen($inputRow); $col++) {
                 $cell=mb_substr($inputRow,$col,1);
 
-                if($cell == "(") {
-                    if(!$isHLOn) {
-                        $outputRow .= '<span class="'.self::VALUE_CLASS_BW_SPAN_HL.'">';
-                    }
-                    $isHLOn = true;
+                if($cell == "(" && !$isHLOnParens) {
+                    $outputRow .= '<span class="'.self::VALUE_CLASS_BW_SPAN_HL_PARENS.'">';
+                    $isHLOnParens = true;
                 }
-                elseif($cell == ")") {
-                    if($isHLOn) {
-                        $outputRow .= '</span>';
-                    }
-                    $isHLOn = false;
+                elseif($cell == ")" && $isHLOnParens) {
+                    $outputRow .= '</span>';
+                    $isHLOnParens = false;
+                }
+                elseif($cell == "[" && !$isHLOnBrackets) {
+                    $outputRow .= '<span class="'.self::VALUE_CLASS_BW_SPAN_HL_BRACKETS.'">';
+                    $isHLOnBrackets = true;
+                }
+                elseif($cell == "]" && $isHLOnBrackets) {
+                    $outputRow .= '</span>';
+                    $isHLOnBrackets = false;
+                }
+                elseif($cell == "{" && !$isHLOnBraces) {
+                    $outputRow .= '<span class="'.self::VALUE_CLASS_BW_SPAN_HL_BRACES.'">';
+                    $isHLOnBraces = true;
+                }
+                elseif($cell == "}" && $isHLOnBraces) {
+                    $outputRow .= '</span>';
+                    $isHLOnBraces = false;
                 }
                 else {
                     $idx=strpos(self::$FEN,$cell);
@@ -558,7 +590,9 @@ class FenBoard {
             }
             $generatedHTML  .=  (($this->isCoordShownLeft || $this->isBorderShownLeft || $this->isCoordPadded) ? mb_substr($boardLeft,$this->coordOriginRow+$this->rowcount-1-$row,1) : "")
                             .   $outputRow
-                            .   ($isHLOn ? '</span>' : "")
+                            .   ($isHLOnParens ? '</span>' : "")
+                            .   ($isHLOnBrackets ? '</span>' : "")
+                            .   ($isHLOnBraces ? '</span>' : "")
                             .   (($this->isCoordShownRight || $this->isBorderShownRight || $this->isCoordPadded) ? mb_substr($boardRight,$this->coordOriginRow+$this->rowcount-1-$row,1) : "")
                             .   "<br/>";
         }
