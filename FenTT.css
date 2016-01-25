@@ -221,11 +221,11 @@ table.fentt div.sq {
 /* Color mixing - Cfr. http://www.w3schools.com/tags/ref_colormixer.asp */
 
 table.fentt span.brackets {
-    /* highlighted light square (brackets) (eg. 60% light + 40% #FF0000 (red) = #FF7C5F) */
-    background-color: #FF7C5F;
+    /* highlighted light square (brackets) (eg. 50% light + 50% #FF0000 (red) = #FF674F) */
+    background-color: #FF674F;
 
-    /* highlighted dark square (brackets) (eg. 60% dark + 40% #FF0000 (red) = #E3532B) */
-    color: #E3532B;
+    /* highlighted dark square (brackets) (eg. 50% dark + 50% #FF0000 (red) = #E84624) */
+    color: #E84624;
 }
 
 table.fentt span.parens {
