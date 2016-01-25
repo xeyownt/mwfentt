@@ -63,7 +63,7 @@ if (defined('MEDIAWIKI')) {
 }
 
 class FenBoard {
-    const VALUE_BORDER_SOLID                       = "solid";
+    const VALUE_BORDER_SIMPLE                      = "simple";
     const VALUE_BORDER_DOUBLE                      = "double";
     const VALUE_BORDER_SQUARE                      = "square";
     const VALUE_BORDER_ROUND                       = "round";
@@ -134,7 +134,7 @@ class FenBoard {
     private $isCoordShownBottom                    = false;
     private $isCoordShownLeft                      = false;
     private $isCoordShownRight                     = false;
-    private $isBorderStyleSimple                   = true;
+    private $isBorderStyleSimple                   = false;
     private $isCornerStyleRound                    = true;
     private $isCoordPadded                         = false;
     private $coordOriginCol                        = 0;
@@ -190,14 +190,14 @@ class FenBoard {
         // print "DEBUG: __construct($this->fencode," . implode(" ",$this->border) . ",$this->mode,$this->cstyle,$this->cclass)\n";
     }
 
-    function border_isNSEO($nseo)
+    function border_isNSEW($nsew)
     {
-        if(strlen($nseo) > 4) {
+        if(strlen($nsew) > 4) {
             return false;
         }
-        for($x=0; $x<strlen($nseo); $x++)
+        for($x=0; $x<strlen($nsew); $x++)
         {
-            if(!strchr("nseo",$nseo[$x])) {
+            if(!strchr("nsew",$nsew[$x])) {
                 return false;
             }
         }
@@ -246,7 +246,7 @@ class FenBoard {
         $isCoordShown = false;
 
         foreach($this->border as $attr) {
-            if($attr == self::VALUE_BORDER_SOLID) {
+            if($attr == self::VALUE_BORDER_SIMPLE) {
                 $this->isBorderShownTop    = true;
                 $this->isBorderShownBottom = true;
                 $this->isBorderShownLeft   = true;
@@ -291,7 +291,7 @@ class FenBoard {
             elseif($attr == self::VALUE_BORDER_PAD) {
                 $this->isCoordPadded = true;
             }
-            elseif($this->border_isNSEO($attr)) {
+            elseif($this->border_isNSEW($attr)) {
                 $this->isCoordShownTop    = false;
                 $this->isCoordShownBottom = false;
                 $this->isCoordShownLeft   = false;
@@ -301,7 +301,7 @@ class FenBoard {
                         case "n": $this->isCoordShownTop    = true; break;
                         case "s": $this->isCoordShownBottom = true; break;
                         case "e": $this->isCoordShownRight  = true; break;
-                        case "o": $this->isCoordShownLeft   = true; break;
+                        case "w": $this->isCoordShownLeft   = true; break;
                     }
                 }
                 if(!$isCoordShown) {
@@ -634,7 +634,7 @@ class FenBoard {
 }
 
 class FenTT {
-    const BORDER = "border";  // "solid", "double", "square", "round", "pad", origin, nseo
+    const BORDER = "border";  // "simple", "double", "square", "round", "pad", origin, nsew
     const MODE   = "mode";    // "color", "bw"
     const CSTYLE  = "cstyle";
     const CCLASS  = "cclass";
@@ -655,10 +655,13 @@ class FenTT {
         $board = new FenBoard($fencode,$border,$mode,$cstyle,$cclass);
 
         if($board->isempty()) {
-            self::$mode_default = $mode;             // Empty tag - store current options as default
-            self::$border_default = $border;         // TODO: Make sure options are valid
-            self::$cstyle_default = $cstyle;
-            self::$cclass_default = $cclass;
+            // Empty tag - store current options as default
+            // TODO: Make sure options are valid
+            // TODO: Can we use the syntax <fentt ... />?
+            self::$mode_default = isset($args[self::MODE]) ? $args[self::MODE] : FenBoard::VALUE_MODE_COLOR;
+            self::$border_default = isset($args[self::BORDER]) ? $args[self::BORDER] : "";
+            self::$cstyle_default = isset($args[self::CSTYLE]) ? $args[self::CSTYLE] : "";
+            self::$cclass_default = isset($args[self::CCLASS]) ? $args[self::CCLASS] : "";
         }
 
         return $board->GetHTML();
