@@ -102,18 +102,20 @@ body {
 }
 
 #content pre {
-	color: green;
+	margin: 0.5em 0em 0.5em 0em; 
+	padding: 0.2em 0em 0.2em 1em; 
 	white-space: pre;
 	font-family: "Bitstream Vera Sans Mono", "Courier New", monospace;
 	font-size: 0.8em;
-	border: red dotted 1px;
-	margin: 0% 5%;
-	padding: 10px 10px;
+    border: none;
+	border-left: 1px dashed #CC0057;
+	background-color: #f0f0f0;
 	overflow: auto;
 }
 
 #content table.table1  {
-	margin-left: 5%;
+	margin-left: 2%;
+	width: 96%;
 	border: none;
 }
 
@@ -124,7 +126,8 @@ body {
 #content table.table2  {
 	border-collapse: collapse;
 	border: hidden;
-	margin-left: 5%;
+	margin-left: 2%;
+	width: 96%;
 }
 
 #content table.table2 td, #content table.table2 th {
@@ -139,7 +142,7 @@ body {
 #content table.keymap  {
 	border-collapse: collapse;
 	border: hidden;
-	margin-left: 5%;
+	margin-left: 2%;
 	empty-cells: show;
 }
 
@@ -173,7 +176,7 @@ body {
 #content code {
 	font-family: monospace;
 	background-color: #EEE;
-	font-size: 1em;
+	font-size: 1.2em;
 }
 
 #content code.kw {
@@ -182,7 +185,6 @@ body {
 
 #content var {
 	font-style: italic;
-	font-weight: bold;
 }
 
 #content em {

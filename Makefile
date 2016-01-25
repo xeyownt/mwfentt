@@ -1,7 +1,7 @@
 
 FENTT_SRC := FenTT.php
 
-DOC_SRC   := doc/sample_page.mw doc/reference.mw
+DOC_SRC   := doc/reference.mw
 DOC_PHP  := $(DOC_SRC:%.mw=%.php)
 DOC_HTML  := $(DOC_SRC:%.mw=%.html)
 
