@@ -96,6 +96,8 @@ table.bwfentt, table.fentt {
     word-spacing: normal                !important;
     padding: 0px                        !important;
     margin: 0px                         !important;
+    display:inline-block;
+    vertical-align:middle;
 }
 
 table.bwfentt td, table.fentt td {
