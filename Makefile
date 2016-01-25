@@ -23,7 +23,7 @@ clean:
 
 # Our almighty sed script to translate wiki text tag <fentt> in a php call ;-)
 $(DOC_HTML): %.html: %.mw $(FENTT_SRC) Makefile
-	@sed -rn '/<fentt/{:a /<\/fentt>/!{N;b a}; s/<fentt([^>]*)>([^<]*)<\/fentt>/<?php print FenTT::renderFentt("\2", array(\1)); ?>/;s/(id|border|mode|cstyle|cclass) *= *"([^"]*)"/"\1"=>"\2",/g;s/, *\)/)/};p' $< > $*.php
+	@sed -rn '/<fentt/{:a /<\/fentt>/!{N;b a}; s/<fentt([^>]*)>([^<]*)<\/fentt>/<?php print FenTT::renderFentt("\2", array(\1)); ?>/;s/(id|border|mode|style|class) *= *"([^"]*)"/"\1"=>"\2",/g;s/, *\)/)/};p' $< > $*.php
 	@php $*.php > $@
 
 # Must copy FenTT.css and ttf fonts because firefox refuses to load web fonts up tree for security reasons

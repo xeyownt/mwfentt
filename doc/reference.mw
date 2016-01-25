@@ -223,7 +223,7 @@
 <!-- Highlight from http://markup.su/highlighter/, Style iPlastic -->
 
 <pre style="background:rgba(238,238,238,0.92);color:#000"><span style="color:#03c">&lt;<span style="font-weight:700">fentt</span> <span style="color:#36c;font-style:italic">border</span>=<span style="color:#093">"a1"</span>></span>rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR<span style="color:#03c">&lt;/<span style="font-weight:700">fentt</span>></span>
-<span style="color:#03c">&lt;<span style="font-weight:700">fentt</span> <span style="color:#36c;font-style:italic">mode</span>=<span style="color:#093">"bw"</span> <span style="color:#36c;font-style:italic">border</span>=<span style="color:#093">"pad e5"</span> <span style="color:#36c;font-style:italic">cstyle</span>=<span style="color:#093">"font-size:3em"</span>></span>...K/.k../..../bb..<span style="color:#03c">&lt;/<span style="font-weight:700">fentt</span>></span>
+<span style="color:#03c">&lt;<span style="font-weight:700">fentt</span> <span style="color:#36c;font-style:italic">mode</span>=<span style="color:#093">"bw"</span> <span style="color:#36c;font-style:italic">border</span>=<span style="color:#093">"pad e5"</span> <span style="color:#36c;font-style:italic">style</span>=<span style="color:#093">"font-size:3em"</span>></span>...K/.k../..../bb..<span style="color:#03c">&lt;/<span style="font-weight:700">fentt</span>></span>
 <span style="color:#03c">&lt;<span style="font-weight:700">fentt</span> <span style="color:#36c;font-style:italic">border</span>=<span style="color:#093">"ns"</span>></span>[xKx]./[xxx]n/.k../..../..../..../..../r.r.<span style="color:#03c">&lt;/<span style="font-weight:700">fentt</span>></span>
 <span style="color:#03c">&lt;<span style="font-weight:700">table</span> <span style="color:#36c;font-style:italic">style</span>=<span style="color:#093">"display:inline-block; vertical-align:middle"</span>></span>
   <span style="color:#03c">&lt;<span style="font-weight:700">tr</span>></span><span style="color:#03c">&lt;<span style="font-weight:700">td</span>></span><span style="color:#03c">&lt;<span style="font-weight:700">fentt</span> <span style="color:#36c;font-style:italic">border</span>=<span style="color:#093">"e5"</span>></span>(+).../r(+++)/(+).../(+)...<span style="color:#03c">&lt;/<span style="font-weight:700">fentt</span>></span><span style="color:#03c">&lt;/<span style="font-weight:700">td</span>></span><span style="color:#03c">&lt;/<span style="font-weight:700">tr</span>></span>
@@ -235,7 +235,7 @@
 
 <p>
   <fentt border="a1">rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR</fentt>
-  <fentt mode="bw" border="pad e5" cstyle="font-size:3em">...K/.k../..../bb..</fentt>
+  <fentt mode="bw" border="pad e5" style="font-size:3em">...K/.k../..../bb..</fentt>
   <fentt border="ns">[xKx]./[xxx]n/.k../..../..../..../..../r.r.</fentt>
   <table style="display:inline-block; vertical-align:middle">
     <tr><td><fentt border="e5">(+).../r(+++)/(+).../(+)...</fentt></td></tr>
@@ -246,7 +246,7 @@
 
 <p>The syntax of this tag is</p>
 <pre>
-<strong>&lt;fentt</strong> [<strong>border="</strong><var>border-attr-list</var><strong>"</strong>] [<strong>mode="</strong><var>mode-attr</var><strong>"</strong>] [<strong>cstyle="</strong><var>inline-style</var><strong>"</strong>] [<strong>cclass="</strong><var>class-attr</var><strong>"</strong>]>
+<strong>&lt;fentt</strong> [<strong>border="</strong><var>border-attr-list</var><strong>"</strong>] [<strong>mode="</strong><var>mode-attr</var><strong>"</strong>] [<strong>style="</strong><var>inline-style</var><strong>"</strong>] [<strong>class="</strong><var>class-attr</var><strong>"</strong>]>
   <var>position-in-FEN</var>
 <strong>&lt;/fentt></strong>
 </pre>
@@ -401,13 +401,13 @@ the board. For instance, the FEN of the starting position is given by</p>
   </tr>
   <tr>
     <td>
-      <fentt border="e5" cstyle="background-color: #CCC">...k/.N../.NK./....</fentt>
-      <fentt border="e5 pad" cstyle="background-color: #CCC">...k/.N../.NK./....</fentt>
+      <fentt border="e5" style="background-color: #CCC">...k/.N../.NK./....</fentt>
+      <fentt border="e5 pad" style="background-color: #CCC">...k/.N../.NK./....</fentt>
     </td>
     <td>
 <pre>
-&lt;fentt border="e5" cstyle="background-color: #CCC">...k/.N../.NK./....&lt;/fentt>
-&lt;fentt border="e5 <em>pad</em>" cstyle="background-color: #CCC">...k/.N../.NK./....&lt;/fentt>
+&lt;fentt border="e5" style="background-color: #CCC">...k/.N../.NK./....&lt;/fentt>
+&lt;fentt border="e5 <em>pad</em>" style="background-color: #CCC">...k/.N../.NK./....&lt;/fentt>
 </pre>
 <p><code class="kw">pad</code> &mdash; Show borders and force renderer to print blanks for sides where coordinates are not shown. This way the chessboard is always surrounded by either a blank or a coordinate character, and hence it is easier to control alignment of the chessboard.</p>
     </td>
@@ -540,12 +540,12 @@ the board. For instance, the FEN of the starting position is given by</p>
 <h3><var>style-attr</var> &mdash; Passing inline style information</h3>
 <!-- =========================================================================================================================== -->
 
-<p>Use the <code class="kw">cstyle</code> attribute to pass inline style information to the board table element. The <code><var>style-attr</var></code> value must be CSS-compliant style, and will be applied to the chessboard <code>table</code> element. The amount of styling that can be applied this way is limited. Use <code class="kw">cclass</code> attribute for finer control on the style.</p>
+<p>Use the <code class="kw">style</code> attribute to pass inline style information to the board table element. The <code><var>style-attr</var></code> value must be CSS-compliant style, and will be applied to the chessboard <code>table</code> element. The amount of styling that can be applied this way is limited. Use <code class="kw">class</code> attribute for finer control on the style.</p>
 
 <table class="table2">
   <tr>
     <td style="width: 10em">
-      <fentt border="e5" cstyle="font-size:32pt;">
+      <fentt border="e5" style="font-size:32pt;">
         +.../
         R+++/
         +.../
@@ -554,7 +554,7 @@ the board. For instance, the FEN of the starting position is given by</p>
     </td>
     <td>
 <pre>
-&lt;fentt border="e5" cstyle="font-size:32pt;">
+&lt;fentt border="e5" style="font-size:32pt;">
   +.../
   R+++/
   +.../
@@ -566,7 +566,7 @@ the board. For instance, the FEN of the starting position is given by</p>
   </tr>
   <tr>
     <td style="width: 10em">
-      <fentt border="e5" cstyle="background-color: #CCC;">
+      <fentt border="e5" style="background-color: #CCC;">
         +.../
         R+++/
         +.../
@@ -575,7 +575,7 @@ the board. For instance, the FEN of the starting position is given by</p>
     </td>
     <td>
 <pre>
-&lt;fentt border="e5" cstyle="background-color: #CCC;">
+&lt;fentt border="e5" style="background-color: #CCC;">
   +.../
   R+++/
   +.../
@@ -593,27 +593,27 @@ the board. For instance, the FEN of the starting position is given by</p>
 <h3><var>class-attr</var> &mdash; Passing class style information</h3>
 <!-- =========================================================================================================================== -->
 
-<p>Use the <code class="kw">cclass</code> attribute to pass class style information to the board table element. Using this attribute allows for finer and deeper control of the board style by defining custom class in the stylesheet.</p>
+<p>Use the <code class="kw">class</code> attribute to pass class style information to the board table element. Using this attribute allows for finer and deeper control of the board style by defining custom class in the stylesheet.</p>
 
 <table class="table2">
   <tr>
     <td style="width: 10em">
-      <fentt border="a1" cclass="fentt1">(+).../(R+++)/(+).../(+)...</fentt>
+      <fentt border="a1" class="fentt1">(+).../(R+++)/(+).../(+)...</fentt>
     </td>
     <td>
 <pre>
-&lt;fentt border="a1" cclass="fentt1">(+).../(R+++)/(+).../(+)...&lt;/fentt>
+&lt;fentt border="a1" class="fentt1">(+).../(R+++)/(+).../(+)...&lt;/fentt>
 </pre>
       <p>A simple customization.</p>
     </td>
   </tr>
   <tr>
     <td style="width: 10em">
-      <fentt border="a1" cclass="fentt2">(+).../(R+++)/(+).../(+)...</fentt>
+      <fentt border="a1" class="fentt2">(+).../(R+++)/(+).../(+)...</fentt>
     </td>
     <td>
 <pre>
-&lt;fentt border="a1" cclass="fentt2">(+).../(R+++)/(+).../(+)...&lt;/fentt>
+&lt;fentt border="a1" class="fentt2">(+).../(R+++)/(+).../(+)...&lt;/fentt>
 </pre>
       <p>A more complex customization.</p>
     </td>
@@ -648,14 +648,14 @@ To set the default values for the <code>&lt;fentt&gt;</code> tag attributes, sim
 </tr>
 <tr>
     <td>
-        <fentt mode="bw" cstyle="font-size:2em"></fentt>
+        <fentt mode="bw" style="font-size:2em"></fentt>
         <fentt>k.../..N./.KN./....</fentt>
         <fentt mode="color">rkbq/pppp/..../....</fentt>
         <fentt>...k/.N../.NK./....</fentt>
     </td>
     <td>
 <pre>
-<em>&lt;fentt mode="bw" cstyle="font-size:2em">&lt;/fentt></em>
+<em>&lt;fentt mode="bw" style="font-size:2em">&lt;/fentt></em>
 &lt;fentt>k.../..N./.KN./....&lt;/fentt>
 &lt;fentt mode="color">rkbq/pppp/..../....&lt;/fentt>
 &lt;fentt>...k/.N../.NK./....&lt;/fentt>
@@ -673,8 +673,8 @@ To set the default values for the <code>&lt;fentt&gt;</code> tag attributes, sim
 <p>There are basically four ways to customize the style of chessboards generated by FenTT:</p>
 <ul>
   <li>Edit the main stylesheet.</li>
-  <li>Pass inline style information using the <code class="kw">cstyle</code> attribute.</li>
-  <li>Pass class style information using the <code class="kw">cclass</code> attribute.</li>
+  <li>Pass inline style information using the <code class="kw">style</code> attribute.</li>
+  <li>Pass class style information using the <code class="kw">class</code> attribute.</li>
   <li>Define new styles based on the class of the containing parent.</li>
 </ul>
 
@@ -689,13 +689,13 @@ To set the default values for the <code>&lt;fentt&gt;</code> tag attributes, sim
 <h3>Specifying inline style</h3>
 <!-- =========================================================================================================================== -->
 
-<p>You can specify inline style to be applied to a single chessboard using the <code class="kw">cstyle</code> attribute. Note however that this method is quite limited since it can only change the styles attached to the root <code class="kw">&lt;table></code> element of generated chessboards. Without going to far into gory technical details, this means that you can only change (cfr. CSS file <code>FenTT.css</code>):</p>
+<p>You can specify inline style to be applied to a single chessboard using the <code class="kw">style</code> attribute. Note however that this method is quite limited since it can only change the styles attached to the root <code class="kw">&lt;table></code> element of generated chessboards. Without going to far into gory technical details, this means that you can only change (cfr. CSS file <code>FenTT.css</code>):</p>
 <ul>
   <li>The size of the font.</li>
   <li>The background color of the board (b&amp;w mode), or the background color of coordinates (color mode).</li>
   <li>The foreground color of the board (b&amp;w mode), or the foreground color of coordinates (color mode).</li>
 </ul>
-<p>If you need more flexibility, you must then use the <code class="kw">cclass</code> attribute instead.</p>
+<p>If you need more flexibility, you must then use the <code class="kw">class</code> attribute instead.</p>
 
 <!-- =========================================================================================================================== -->
 <h3>Specifying class style</h3>
@@ -703,7 +703,7 @@ To set the default values for the <code>&lt;fentt&gt;</code> tag attributes, sim
 
 <p>This method allows you to change all custom styles attached to a group of chessboards, ie. including color of squares and color of highlighted squares. This is a very convenient method to use different rendering styles in a same Wiki page. For instance, you can define a style for the starting position of a game you want to study, and define another style for showing intermediate
 positions.</p>
-<p>To do so, you simply define a new <var>class-attr</var> name, and define the styles to apply to chessboards you have attached this class to through the <code class="kw">cclass</code> attribute. You can define these styles either in an external stylesheet or in an internal stylesheet. The syntax to follow is identical to the one of the custom stylesheet in the CSS file <code>FenTT.css</code>. See the source code of this page for an example.</p>
+<p>To do so, you simply define a new <var>class-attr</var> name, and define the styles to apply to chessboards you have attached this class to through the <code class="kw">class</code> attribute. You can define these styles either in an external stylesheet or in an internal stylesheet. The syntax to follow is identical to the one of the custom stylesheet in the CSS file <code>FenTT.css</code>. See the source code of this page for an example.</p>
 
 <!-- =========================================================================================================================== -->
 <h3>Relying on the containing parent class style</h3>

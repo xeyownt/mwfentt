@@ -70,14 +70,14 @@ class FenBoard {
     const VALUE_BORDER_PAD                         = "pad";
     const VALUE_MODE_COLOR                         = "color";
     const VALUE_MODE_BW                            = "bw";
-    const VALUE_CLASS_BW_TABLE                     = "bwfentt";
-    const VALUE_CLASS_COLOR_TABLE                  = "fentt";
-    const VALUE_CLASS_BW_SPAN_HL_PARENS            = "bwparens";
-    const VALUE_CLASS_COLOR_SPAN_HL_PARENS         = "parens";
-    const VALUE_CLASS_BW_SPAN_HL_BRACKETS          = "bwbrackets";
-    const VALUE_CLASS_COLOR_SPAN_HL_BRACKETS       = "brackets";
-    const VALUE_CLASS_BW_SPAN_HL_BRACES            = "bwbraces";
-    const VALUE_CLASS_COLOR_SPAN_HL_BRACES         = "braces";
+    const VALUE_CCLASS_BW_TABLE                     = "bwfentt";
+    const VALUE_CCLASS_COLOR_TABLE                  = "fentt";
+    const VALUE_CCLASS_BW_SPAN_HL_PARENS            = "bwparens";
+    const VALUE_CCLASS_COLOR_SPAN_HL_PARENS         = "parens";
+    const VALUE_CCLASS_BW_SPAN_HL_BRACKETS          = "bwbrackets";
+    const VALUE_CCLASS_COLOR_SPAN_HL_BRACKETS       = "brackets";
+    const VALUE_CCLASS_BW_SPAN_HL_BRACES            = "bwbraces";
+    const VALUE_CCLASS_COLOR_SPAN_HL_BRACES         = "braces";
 
     private static $is_decoded                     = false;
     private static $U_MFB                          = '\u00A0'; // Use '\u00A0' for blank (nb-sp)
@@ -123,8 +123,8 @@ class FenBoard {
     private $fencode;
     private $border;
     private $mode;
-    private $cstyle;
-    private $cclass;
+    private $style;
+    private $class;
     private $parsed_ok;
     private $isBorderShownTop                      = false;
     private $isBorderShownBottom                   = false;
@@ -142,12 +142,12 @@ class FenBoard {
     private $rowcount                              = 0;
     private $colcount                              = 0;
 
-    function __construct($fencode,$border="",$mode="",$cstyle="",$cclass="") {
+    function __construct($fencode,$border="",$mode="",$style="",$class="") {
         $this->fencode=$fencode;
         $this->border=explode(" ",$border);
         $this->mode=$mode;
-        $this->cstyle=$cstyle;
-        $this->cclass=$cclass;
+        $this->style=$style;
+        $this->class=$class;
 
         if(! self::$is_decoded) {
             self::$is_decoded = true;
@@ -187,7 +187,7 @@ class FenBoard {
         // Parse FEN code and border attribute
         $this->parsed_ok = $this->parseFen() && $this->parseBorder();
 
-        // print "DEBUG: __construct($this->fencode," . implode(" ",$this->border) . ",$this->mode,$this->cstyle,$this->cclass)\n";
+        // print "DEBUG: __construct($this->fencode," . implode(" ",$this->border) . ",$this->mode,$this->style,$this->class)\n";
     }
 
     function border_isNSEW($nsew)
@@ -333,11 +333,11 @@ class FenBoard {
         }
 
         $generatedHTML="";
-        $this->cclass = self::VALUE_CLASS_COLOR_TABLE . ($this->cclass == "" ? "" : " " . $this->cclass);
+        $this->class = self::VALUE_CCLASS_COLOR_TABLE . ($this->class == "" ? "" : " " . $this->class);
 
         /* ----- Chess table ---------------------------------------------------------------------------------------------------- */
-        $generatedHTML  .=  '<table class="' . $this->cclass . '"'
-                        .   ($this->cstyle != "" ? ' style="'.$this->cstyle.'"' : "")
+        $generatedHTML  .=  '<table class="' . $this->class . '"'
+                        .   ($this->style != "" ? ' style="'.$this->style.'"' : "")
                         .   '>';
 
         /* ----- Top cols ------------------------------------------------------------------------------------------------------- */
@@ -392,7 +392,7 @@ class FenBoard {
                 $cell=$inputRow[$col];
 
                 if($cell == "(" && !$isHLOnParens) {
-                    $outputSqRow .= '<span class="'.self::VALUE_CLASS_COLOR_SPAN_HL_PARENS.'">';
+                    $outputSqRow .= '<span class="'.self::VALUE_CCLASS_COLOR_SPAN_HL_PARENS.'">';
                     $isHLOnParens = true;
                 }
                 elseif($cell == ")" && $isHLOnParens) {
@@ -400,7 +400,7 @@ class FenBoard {
                     $isHLOnParens = false;
                 }
                 elseif($cell == "[" && !$isHLOnBrackets) {
-                    $outputSqRow .= '<span class="'.self::VALUE_CLASS_COLOR_SPAN_HL_BRACKETS.'">';
+                    $outputSqRow .= '<span class="'.self::VALUE_CCLASS_COLOR_SPAN_HL_BRACKETS.'">';
                     $isHLOnBrackets = true;
                 }
                 elseif($cell == "]" && $isHLOnBrackets) {
@@ -408,7 +408,7 @@ class FenBoard {
                     $isHLOnBrackets = false;
                 }
                 elseif($cell == "{" && !$isHLOnBraces) {
-                    $outputSqRow .= '<span class="'.self::VALUE_CLASS_COLOR_SPAN_HL_BRACES.'">';
+                    $outputSqRow .= '<span class="'.self::VALUE_CCLASS_COLOR_SPAN_HL_BRACES.'">';
                     $isHLOnBraces = true;
                 }
                 elseif($cell == "}" && $isHLOnBraces) {
@@ -528,10 +528,10 @@ class FenBoard {
                      + $this->colcount
                      +(($this->isCoordShownRight || $this->isBorderShownRight || $this->isCoordPadded) ? 1 : 0);
 
-        $this->cclass = self::VALUE_CLASS_BW_TABLE . ($this->cclass == "" ? "" : " " . $this->cclass);
+        $this->class = self::VALUE_CCLASS_BW_TABLE . ($this->class == "" ? "" : " " . $this->class);
 
         /* ----- Chess table ---------------------------------------------------------------------------------------------------- */
-        $generatedHTML.='<table class="' . $this->cclass . '"' . ($this->cstyle != "" ? ' style="'.$this->cstyle.'"' : "") . '>' .'<tr><td>';
+        $generatedHTML.='<table class="' . $this->class . '"' . ($this->style != "" ? ' style="'.$this->style.'"' : "") . '>' .'<tr><td>';
 
         if($this->isCoordShownTop || $this->isBorderShownTop || $this->isCoordPadded) {
             $generatedHTML.= ($this->isBorderShownLeft && $this->isBorderShownTop
@@ -557,7 +557,7 @@ class FenBoard {
                 $cell=mb_substr($inputRow,$col,1);
 
                 if($cell == "(" && !$isHLOnParens) {
-                    $outputRow .= '<span class="'.self::VALUE_CLASS_BW_SPAN_HL_PARENS.'">';
+                    $outputRow .= '<span class="'.self::VALUE_CCLASS_BW_SPAN_HL_PARENS.'">';
                     $isHLOnParens = true;
                 }
                 elseif($cell == ")" && $isHLOnParens) {
@@ -565,7 +565,7 @@ class FenBoard {
                     $isHLOnParens = false;
                 }
                 elseif($cell == "[" && !$isHLOnBrackets) {
-                    $outputRow .= '<span class="'.self::VALUE_CLASS_BW_SPAN_HL_BRACKETS.'">';
+                    $outputRow .= '<span class="'.self::VALUE_CCLASS_BW_SPAN_HL_BRACKETS.'">';
                     $isHLOnBrackets = true;
                 }
                 elseif($cell == "]" && $isHLOnBrackets) {
@@ -573,7 +573,7 @@ class FenBoard {
                     $isHLOnBrackets = false;
                 }
                 elseif($cell == "{" && !$isHLOnBraces) {
-                    $outputRow .= '<span class="'.self::VALUE_CLASS_BW_SPAN_HL_BRACES.'">';
+                    $outputRow .= '<span class="'.self::VALUE_CCLASS_BW_SPAN_HL_BRACES.'">';
                     $isHLOnBraces = true;
                 }
                 elseif($cell == "}" && $isHLOnBraces) {
@@ -636,23 +636,23 @@ class FenBoard {
 class FenTT {
     const BORDER = "border";  // "simple", "double", "square", "round", "pad", origin, nsew
     const MODE   = "mode";    // "color", "bw"
-    const CSTYLE  = "cstyle";
-    const CCLASS  = "cclass";
+    const STYLE  = "style";
+    const CCLASS  = "class";
     private static $mode_default = FenBoard::VALUE_MODE_COLOR;
     private static $border_default = "";
-    private static $cstyle_default = "";
-    private static $cclass_default = "";
+    private static $style_default = "";
+    private static $class_default = "";
 
     // Render <fentt>
     static public function renderFentt( $input, array $args ) {
         $border = isset($args[self::BORDER]) ? $args[self::BORDER] : self::$border_default;
         $mode = isset($args[self::MODE]) ? $args[self::MODE] : self::$mode_default;
-        $cstyle = isset($args[self::CSTYLE]) ? $args[self::CSTYLE] : self::$cstyle_default;
-        $cclass = isset($args[self::CCLASS]) ? $args[self::CCLASS] : self::$cclass_default;
+        $style = isset($args[self::STYLE]) ? $args[self::STYLE] : self::$style_default;
+        $class = isset($args[self::CCLASS]) ? $args[self::CCLASS] : self::$class_default;
         $fencode = $input;
 
         // Generate html for current tag
-        $board = new FenBoard($fencode,$border,$mode,$cstyle,$cclass);
+        $board = new FenBoard($fencode,$border,$mode,$style,$class);
 
         if($board->isempty()) {
             // Empty tag - store current options as default
@@ -660,8 +660,8 @@ class FenTT {
             // TODO: Can we use the syntax <fentt ... />?
             self::$mode_default = isset($args[self::MODE]) ? $args[self::MODE] : FenBoard::VALUE_MODE_COLOR;
             self::$border_default = isset($args[self::BORDER]) ? $args[self::BORDER] : "";
-            self::$cstyle_default = isset($args[self::CSTYLE]) ? $args[self::CSTYLE] : "";
-            self::$cclass_default = isset($args[self::CCLASS]) ? $args[self::CCLASS] : "";
+            self::$style_default = isset($args[self::STYLE]) ? $args[self::STYLE] : "";
+            self::$class_default = isset($args[self::CCLASS]) ? $args[self::CCLASS] : "";
         }
 
         return $board->GetHTML();
