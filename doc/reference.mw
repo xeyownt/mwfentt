@@ -465,7 +465,9 @@ the board. For instance, the FEN of the starting position is given by</p>
       <p>Note that specifying board origin after border visibility overrides border visibility settings, as in example below.</p>
       <table class="table2">
         <tr>
-          <td style="width: 10em"><fentt border="pad sw e5">...k/.N../.NK./....</fentt></td>
+          <td style="width: 10em">
+            <fentt border="pad sw e5">...k/.N../.NK./....</fentt>
+          </td>
           <td>
 <pre>
 &lt;fentt border="pad <em>sw e5</em>">...k/.N../.NK./....&lt;/fentt>
