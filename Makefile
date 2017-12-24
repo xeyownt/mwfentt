@@ -1,5 +1,5 @@
-
-FENTT_SRC := FenTT.php
+EXT := FenTT
+FENTT_SRC := $(EXT).hooks.php
 
 DOC_SRC   := doc/reference.mw
 DOC_PHP  := $(DOC_SRC:%.mw=%.php)
@@ -10,7 +10,8 @@ all:
 	@echo "FenTT Mediawiki Extension makefile"
 	@echo
 	@echo "Available targets:"
-	@echo "    make doc   : generate documentation."
+	@echo "    make doc     : generate documentation."
+	@echo "    make install : Install as Mediawiki extension (WILL DELETE NON-NECESSARY FILES)."
 	@echo
 	@echo "For documentation, run 'make doc' and open file doc/reference.html in a browser."
 
@@ -31,3 +32,8 @@ $(DOC_HTML): %.html: %.mw $(FENTT_SRC) Makefile
 doc: $(DOC_HTML)
 	cp FenTT.css doc/
 	cp chess_merida_unicode.ttf doc/
+
+.PHONY: install
+install:
+	rm -rf .git COPYING doc Makefile README.md
+	egrep -q "^[[:blank:]]*wfLoadExtension[[:blank:]]*\([[:blank:]]*'$(EXT)'[[:blank:]]*\)[[:blank:]]*;[[:blank:]]*$$" ../../LocalSettings.php || sed -ri "\$$s/$$/\nwfLoadExtension( '$(EXT)' );/" ../../LocalSettings.php

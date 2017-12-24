@@ -1,4 +1,4 @@
-# mwfentt
+# FenTT
 FenTT is a MediaWiki extension that renders high quality chess diagrams described in FEN using only TrueType fonts and CSS style.
 
 ## Usage
@@ -13,13 +13,18 @@ Usage instructions are contained in the package. To view it,
 
 ## Installation
 
-Copy the files in a directory called `FenTT/` in your wiki `extensions/` folder. At least the following files must be copied:
-* `chess_merida_unicode.ttf`,
-* `extension.json`,
-* `FenTT.css`, and
-* `FenTT.hooks.php`.
+The simplest is to clone the git repository in folder `extensions` of your wiki and run the `install`
+target:
 
-Then add at the bottom of your `LocalSettings.php` file (MW 1.25 or above):
+```bash
+cd /path/to/your/wiki/extensions
+git clone --depth 1 https://github.com/xeyownt/mwfentt FenTT
+cd FenTT
+make install
+```
+
+`make install` will delete all files that are not necessary for the extension to run, and add the
+following line at the end of `LocalSettings.php` (MW 1.25 or above):
 ```php
 wfLoadExtension( 'FenTT' );
 ```
