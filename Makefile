@@ -50,7 +50,7 @@ install-clean:
 .PHONY: install
 install: install-clean
 	# echo append in case LocalSettings is a symlink, to preserve symlink
-	egrep -q '^[[:blank:]]*wfLoadExtension[[:blank:]]*\([[:blank:]]*'$(EXT)'[[:blank:]]*\)[[:blank:]]*;[[:blank:]]*$$' ../../LocalSettings.php || echo "wfLoadExtension( '$(EXT)' );" >> ../../LocalSettings.php
+	egrep -q "^[[:blank:]]*wfLoadExtension[[:blank:]]*\([[:blank:]]*'$(EXT)'[[:blank:]]*\)[[:blank:]]*;[[:blank:]]*\$$" ../../LocalSettings.php || echo "wfLoadExtension( '$(EXT)' );" >> ../../LocalSettings.php
 
 .PHONY: install-1.24
 install-1.24: install-clean
