@@ -1,0 +1,30 @@
+{
+    "name": "FenTT",
+    "author": "Michaël Peeters",
+    "url": "http://www.mediawiki.org/wiki/Extension:FenTT",
+    "description": "Render high-quality chess diagrams in FEN notation using TrueType fonts and CSS style.",
+    "version": "1.0.0",
+    "license-name": "GPL-2.0",
+    "type": "parserhook",
+    "AutoloadClasses": {
+        "FenTTHooks": "FenTT.hooks.php"
+    },
+	"Hooks": {
+		"ParserFirstCallInit": [
+			"FenTTHooks::onParserFirstCallInit"
+		]
+	},
+    "ResourceModules": {
+        "ext.FenTT.styles": {
+            "styles": [
+                "FenTT.css"
+            ],
+            "position": "top"
+        }
+    },
+    "ResourceFileModulePaths": {
+        "localBasePath": "",
+        "remoteExtPath": "FenTT"
+    },
+    "manifest_version": 1
+}

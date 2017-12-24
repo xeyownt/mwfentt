@@ -25,40 +25,21 @@
  *==============================================================================
  */
 
-if (defined('MEDIAWIKI')) {
-    $wgHooks['ParserFirstCallInit'][] = 'MWFenTT::onParserFirstCallInit';
+class FenTTHooks {
+    private static $css_module_added = false;
 
-    $wgResourceModules['ext.FenTT'] = array(
-        'localBasePath' => __DIR__,
-        'remoteExtPath' => 'FenTT',
-        'styles'        => 'FenTT.css',
-        'position'      => 'top',
-    );
+    static function onParserFirstCallInit( Parser $parser ) {
+        // Register parser handler for tag <fentt>
+        $parser->setHook( 'fentt', 'FenTTHooks::parserHook' );
+    }
 
-    $wgExtensionCredits['parserhook'][] = array(
-        'name'        => 'FenTT',
-        'version'     => '1.0.0',
-        'author'      => 'Michael Peeters',
-        'url'         => 'http://www.mediawiki.org/wiki/Extension:FenTT',
-        'description' => 'Render high-quality chess diagrams in FEN notation using TrueType fonts and CSS style.'
-    );
-
-    class MWFenTT {
-        private static $css_module_added = false;
-
-        static function onParserFirstCallInit( Parser $parser ) {
-            // Register parser handler for tag <fentt>
-            $parser->setHook( 'fentt', 'MWFenTT::renderFentt' );
+    static function parserHook( $input, array $args, Parser $parser, PPFrame $frame ) {
+        if( ! self::$css_module_added ) {
+            // Tell ResourceLoader that we need our css module
+            $parser->getOutput()->addModuleStyles( 'ext.FenTT.styles' );
+            self::$css_module_added = true;
         }
-
-        static function renderFentt( $input, array $args, Parser $parser, PPFrame $frame ) {
-            if( ! self::$css_module_added ) {
-                // Tell ResourceLoader that we need our css module
-                $parser->getOutput()->addModuleStyles( 'ext.FenTT' );
-                self::$css_module_added = true;
-            }
-            return FenTT::renderFentt($input,$args);
-        }
+        return FenTT::renderFentt($input,$args);
     }
 }
 

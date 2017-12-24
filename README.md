@@ -13,37 +13,24 @@ Usage instructions are contained in the package. To view it,
 
 ## Installation
 
-* Copy the files in a directory called `FenTT/` in your wiki `extensions/` folder. At least the following files must be copied:
-  * chess_merida_unicode.ttf,
-  * FenTT.css, and
-  * FenTT.php.
-* For MediaWiki 1.25+, add the following code at the bottom of your `LocalSettings.php`:
-```
+Copy the files in a directory called `FenTT/` in your wiki `extensions/` folder. At least the following files must be copied:
+* `chess_merida_unicode.ttf`,
+* `extension.json`,
+* `FenTT.css`, and
+* `FenTT.hooks.php`.
+
+Then add at the bottom of your `LocalSettings.php` file (MW 1.25 or above):
+```php
 wfLoadExtension( 'FenTT' );
 ```
-* For MediaWiki 1.24 or earlier, add the following code instead:
-```
-require_once "$IP/extensions/FenTT/FenTT.php";
-```
-* Done - Navigate to `Special:Version` on your wiki to verify that the extension is successfully installed.
+
+Done! Navigate to `Special:Version` on your wiki to verify that the extension is successfully installed.
 
 ## Links
 
 * [FenTT extension page on mediawiki.org](http://www.mediawiki.org/wiki/Extension:FenTT).
-* [Homepage](http://mip.noekeon.org/mwfentt).
+* [Homepage](http://mip.noekeon.org/mwfentt/reference.html).
 * [Source code on GitHub](https://github.com/xeyownt/mwfentt).
-
-## Content
-
-```
-doc/                       Documentation folder
-chess_merdia_unicode.ttf   The Chess Merida Unicode TrueType font
-COPYING                    License information
-FenTT.css                  The FenTT extension stylesheet
-FenTT.php                  The FenTT extension code
-Makefile                   Makefile to produce the documentation
-Readme.md                  This file
-```
 
 ## License
 
