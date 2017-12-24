@@ -36,4 +36,5 @@ doc: $(DOC_HTML)
 .PHONY: install
 install:
 	rm -rf .git COPYING doc Makefile README.md
-	egrep -q "^[[:blank:]]*wfLoadExtension[[:blank:]]*\([[:blank:]]*'$(EXT)'[[:blank:]]*\)[[:blank:]]*;[[:blank:]]*$$" ../../LocalSettings.php || sed -ri "\$$s/$$/\nwfLoadExtension( '$(EXT)' );/" ../../LocalSettings.php
+	# echo append in case LocalSettings is a symlink, to preserve symlink
+	egrep -q "^[[:blank:]]*wfLoadExtension[[:blank:]]*\([[:blank:]]*'$(EXT)'[[:blank:]]*\)[[:blank:]]*;[[:blank:]]*$$" ../../LocalSettings.php || echo "wfLoadExtension( 'FenTT' );" >> ../../LocalSettings.php
