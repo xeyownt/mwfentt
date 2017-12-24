@@ -44,7 +44,7 @@ if ( function_exists( 'wfLoadExtension' ) ) {
 
     $wgExtensionCredits['parserhook'][] = array(
         'name'        => 'FenTT',
-        'version'     => '1.0.2',
+        'version'     => '1.0.3',
         'license-name'=> 'GPL-2.0+',
         'author'      => 'Michaël Peeters',
         'url'         => 'http://www.mediawiki.org/wiki/Extension:FenTT',
