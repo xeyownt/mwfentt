@@ -10,8 +10,12 @@ all:
 	@echo "FenTT Mediawiki Extension makefile"
 	@echo
 	@echo "Available targets:"
-	@echo "    make doc     : generate documentation."
-	@echo "    make install : Install as Mediawiki extension (WILL DELETE NON-NECESSARY FILES)."
+	@echo "    make doc          : generate documentation."
+	@echo
+	@echo "    make install      : Install as Mediawiki extension (since MW 1.25)."
+	@echo "    make install-1.24 : Install as Mediawiki extension (MW 1.24 or earlier)."
+	@echo
+	@echo "        !!! install AND install-1.24 WILL DELETE ALL NON-NECESSARY FILES !!!"
 	@echo
 	@echo "For documentation, run 'make doc' and open file doc/reference.html in a browser."
 
@@ -33,8 +37,17 @@ doc: $(DOC_HTML)
 	cp FenTT.css doc/
 	cp chess_merida_unicode.ttf doc/
 
-.PHONY: install
-install:
+.PHONY: install-clean
+install-clean:
 	rm -rf .git COPYING doc Makefile README.md
+
+.PHONY: install
+install: install-clean
 	# echo append in case LocalSettings is a symlink, to preserve symlink
-	egrep -q "^[[:blank:]]*wfLoadExtension[[:blank:]]*\([[:blank:]]*'$(EXT)'[[:blank:]]*\)[[:blank:]]*;[[:blank:]]*$$" ../../LocalSettings.php || echo "wfLoadExtension( 'FenTT' );" >> ../../LocalSettings.php
+	egrep -q '^[[:blank:]]*wfLoadExtension[[:blank:]]*\([[:blank:]]*'$(EXT)'[[:blank:]]*\)[[:blank:]]*;[[:blank:]]*$$' ../../LocalSettings.php || echo "wfLoadExtension( '$(EXT)' );" >> ../../LocalSettings.php
+
+.PHONY: install-1.24
+install-1.24: install-clean
+	# echo append in case LocalSettings is a symlink, to preserve symlink
+	egrep -q '^[[:blank:]]*require_once[[:blank:]]+"\$$IP/extensions/$(EXT)/$(EXT).php"[[:blank:]]*;[[:blank:]]*$$' ../../LocalSettings.php || echo 'require_once "$$IP/extensions/$(EXT)/$(EXT).php";' >> ../../LocalSettings.php
+
