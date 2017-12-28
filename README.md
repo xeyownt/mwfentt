@@ -2,6 +2,9 @@
 FenTT is a MediaWiki extension that renders high quality chess diagrams described in FEN using only
 TrueType fonts and CSS style.
 
+Visit [FenTT test page on WikiTest](https://wikitest.immie.org/wiki/FenTT) for examples and trying the
+extension by yourself.
+
 ## Usage
 
 Usage instructions are contained in the package. To view it,
@@ -38,9 +41,10 @@ Done! Navigate to `Special:Version` on your wiki to verify that the extension is
 
 ## Links
 
-* [FenTT extension page on mediawiki.org](http://www.mediawiki.org/wiki/Extension:FenTT).
+* [**FenTT** extension page on mediawiki.org](http://www.mediawiki.org/wiki/Extension:FenTT).
+* [**Try FenTT** on WikiTest test page](https://wikitest.immie.org/wiki/FenTT).
 * [Homepage](http://mip.noekeon.org/mwfentt/reference.html).
-* [Source code on GitHub](https://github.com/xeyownt/mwfentt).
+* [Source code on **GitHub**](https://github.com/xeyownt/mwfentt).
 
 ## License
 
